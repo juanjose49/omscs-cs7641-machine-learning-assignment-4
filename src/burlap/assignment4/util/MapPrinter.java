@@ -35,6 +35,7 @@ public class MapPrinter {
 
 		     
 		System.out.println();
+		System.out.println("This is your optimal policy:");
 		
 		String[][] policy = new String[map[0].length][map.length];
 		

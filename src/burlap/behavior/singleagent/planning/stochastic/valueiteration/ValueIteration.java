@@ -183,7 +183,7 @@ public class ValueIteration extends DynamicProgramming implements Planner {
 			return false; //no need for additional reachability testing
 		}
 		
-		DPrint.cl(this.debugCode, "Starting reachability analysis");
+//		DPrint.cl(this.debugCode, "Starting reachability analysis");
 		
 		//add to the open list
 		LinkedList <HashableState> openList = new LinkedList<HashableState>();
@@ -224,7 +224,7 @@ public class ValueIteration extends DynamicProgramming implements Planner {
 			
 		}
 		
-		DPrint.cl(this.debugCode, "Finished reachability analysis; # states: " + mapToStateIndex.size());
+//		DPrint.cl(this.debugCode, "Finished reachability analysis; # states: " + mapToStateIndex.size());
 		
 		this.foundReachableStates = true;
 		this.hasRunVI = false;

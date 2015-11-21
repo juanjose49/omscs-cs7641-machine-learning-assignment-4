@@ -197,7 +197,7 @@ public class DifferentiableVI extends DifferentiableDP implements Planner {
 
 		HashableState sih = this.stateHash(si);
 
-		DPrint.cl(this.debugCode, "Starting reachability analysis");
+//		DPrint.cl(this.debugCode, "Starting reachability analysis");
 
 		//add to the open list
 		LinkedList<HashableState> openList = new LinkedList<HashableState>();
@@ -236,7 +236,7 @@ public class DifferentiableVI extends DifferentiableDP implements Planner {
 
 		}
 
-		DPrint.cl(this.debugCode, "Finished reachability analysis; # states: " + mapToStateIndex.size());
+//		DPrint.cl(this.debugCode, "Finished reachability analysis; # states: " + mapToStateIndex.size());
 
 		this.foundReachableStates = true;
 		this.hasRunVI = false;
