@@ -95,7 +95,7 @@ public class EasyGridWorldLauncher {
 //		Visualizer v = gen.getVisualizer();
 //		new EpisodeSequenceVisualizer(v, domain, Arrays.asList(ea));
 		AnalysisAggregator.printValueIterationResults();
-		MapPrinter.printPolicyMap(vi.getAllStates(), p, gen);
+		MapPrinter.printPolicyMap(vi.getAllStates(), p, gen.getMap());
 		System.out.println("\n\n");
 	}
 	
@@ -129,7 +129,7 @@ public class EasyGridWorldLauncher {
 //		new EpisodeSequenceVisualizer(v, domain, Arrays.asList(ea));
 		AnalysisAggregator.printPolicyIterationResults();
 
-		MapPrinter.printPolicyMap(pi.getAllStates(), p, gen);
+		MapPrinter.printPolicyMap(pi.getAllStates(), p, gen.getMap());
 		System.out.println("\n\n");
 
 	}
@@ -159,7 +159,7 @@ public class EasyGridWorldLauncher {
 
 		}
 		AnalysisAggregator.printQLearningResults();
-		MapPrinter.printPolicyMap(getAllStates(domain,rf,tf,initialState), p, gen);
+		MapPrinter.printPolicyMap(getAllStates(domain,rf,tf,initialState), p, gen.getMap());
 		System.out.println("\n\n");
 
 		

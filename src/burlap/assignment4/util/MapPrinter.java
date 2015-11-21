@@ -30,8 +30,7 @@ public class MapPrinter {
 
 	}
 	
-	public static void printPolicyMap(List<State> states, Policy p,EasyGridWorld gen) {
-		int[][] map = gen.getMap();
+	public static void printPolicyMap(List<State> states, Policy p,int[][] map) {
 
 		     
 		System.out.println();
