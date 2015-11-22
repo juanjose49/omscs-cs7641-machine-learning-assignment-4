@@ -3,7 +3,7 @@ package burlap.assignment4.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import burlap.assignment4.easy.EasyGridWorld;
+import burlap.assignment4.BasicGridWorld;
 import burlap.oomdp.core.Domain;
 import burlap.oomdp.core.TransitionProbability;
 import burlap.oomdp.core.objects.ObjectInstance;
@@ -34,9 +34,9 @@ public class Movement extends SimpleAction implements FullActionModel {
 	@Override
 	protected State performActionHelper(State s, GroundedAction groundedAction) {
 		//get agent and current position
-		ObjectInstance agent = s.getFirstObjectOfClass(EasyGridWorld.CLASSAGENT);
-		int curX = agent.getIntValForAttribute(EasyGridWorld.ATTX);
-		int curY = agent.getIntValForAttribute(EasyGridWorld.ATTY);
+		ObjectInstance agent = s.getFirstObjectOfClass(BasicGridWorld.CLASSAGENT);
+		int curX = agent.getIntValForAttribute(BasicGridWorld.ATTX);
+		int curY = agent.getIntValForAttribute(BasicGridWorld.ATTY);
 
 		//sample directon with random roll
 		double r = Math.random();
@@ -54,8 +54,8 @@ public class Movement extends SimpleAction implements FullActionModel {
 		int [] newPos = this.moveResult(curX, curY, dir);
 
 		//set the new position
-		agent.setValue(EasyGridWorld.ATTX, newPos[0]);
-		agent.setValue(EasyGridWorld.ATTY, newPos[1]);
+		agent.setValue(BasicGridWorld.ATTX, newPos[0]);
+		agent.setValue(BasicGridWorld.ATTY, newPos[1]);
 
 		//return the state we just modified
 		return s;
@@ -64,9 +64,9 @@ public class Movement extends SimpleAction implements FullActionModel {
 	@Override
 	public List<TransitionProbability> getTransitions(State s, GroundedAction groundedAction) {
 		//get agent and current position
-		ObjectInstance agent = s.getFirstObjectOfClass(EasyGridWorld.CLASSAGENT);
-		int curX = agent.getIntValForAttribute(EasyGridWorld.ATTX);
-		int curY = agent.getIntValForAttribute(EasyGridWorld.ATTY);
+		ObjectInstance agent = s.getFirstObjectOfClass(BasicGridWorld.CLASSAGENT);
+		int curX = agent.getIntValForAttribute(BasicGridWorld.ATTX);
+		int curY = agent.getIntValForAttribute(BasicGridWorld.ATTY);
 
 		List<TransitionProbability> tps = new ArrayList<TransitionProbability>(4);
 		TransitionProbability noChangeTransition = null;
@@ -75,9 +75,9 @@ public class Movement extends SimpleAction implements FullActionModel {
 			if(newPos[0] != curX || newPos[1] != curY){
 				//new possible outcome
 				State ns = s.copy();
-				ObjectInstance nagent = ns.getFirstObjectOfClass(EasyGridWorld.CLASSAGENT);
-				nagent.setValue(EasyGridWorld.ATTX, newPos[0]);
-				nagent.setValue(EasyGridWorld.ATTY, newPos[1]);
+				ObjectInstance nagent = ns.getFirstObjectOfClass(BasicGridWorld.CLASSAGENT);
+				nagent.setValue(BasicGridWorld.ATTX, newPos[0]);
+				nagent.setValue(BasicGridWorld.ATTY, newPos[1]);
 
 				//create transition probability object and add to our list of outcomes
 				tps.add(new TransitionProbability(ns, this.directionProbs[i]));

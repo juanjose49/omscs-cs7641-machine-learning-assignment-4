@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
 
-import burlap.assignment4.easy.EasyGridWorld;
+import burlap.assignment4.BasicGridWorld;
 import burlap.oomdp.core.objects.ObjectInstance;
 import burlap.oomdp.core.states.State;
 import burlap.oomdp.visualizer.ObjectPainter;
@@ -32,8 +32,8 @@ public class AgentPainter implements ObjectPainter{
 		float width = cWidth / fWidth;
 		float height = cHeight / fHeight;
 
-		int ax = ob.getIntValForAttribute(EasyGridWorld.ATTX);
-		int ay = ob.getIntValForAttribute(EasyGridWorld.ATTY);
+		int ax = ob.getIntValForAttribute(BasicGridWorld.ATTX);
+		int ay = ob.getIntValForAttribute(BasicGridWorld.ATTY);
 
 		//left coordinate of cell on our canvas
 		float rx = ax*width;

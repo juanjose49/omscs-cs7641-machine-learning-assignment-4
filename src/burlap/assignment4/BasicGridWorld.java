@@ -1,4 +1,4 @@
-package burlap.assignment4.easy;
+package burlap.assignment4;
 
 import burlap.assignment4.util.AgentPainter;
 import burlap.assignment4.util.AtLocation;
@@ -17,7 +17,7 @@ import burlap.oomdp.singleagent.SADomain;
 import burlap.oomdp.visualizer.StateRenderLayer;
 import burlap.oomdp.visualizer.Visualizer;
 
-public class EasyGridWorld implements DomainGenerator {
+public class BasicGridWorld implements DomainGenerator {
 
 	public static final String ATTX = "x";
 	public static final String ATTY = "y";
@@ -33,18 +33,16 @@ public class EasyGridWorld implements DomainGenerator {
 	public static final String PFAT = "at";
 
 	// ordered so first dimension is x
-	protected int[][] map = new int[][] { 
-			{ 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0 },
-			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-			{ 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0 },
-			{ 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0 },
-			{ 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0 },
-			{ 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1 },
-			{ 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0 },
-			{ 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0 },
-			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-			{ 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0 },
-			{ 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0 }, };
+	protected int[][] map ;
+	protected static int mapx;
+	protected static int mapy;
+	
+	public BasicGridWorld(int[][] map,int mapx, int mapy){
+		this.map = map;
+		this.mapx = mapx;
+		this.mapy = mapy;
+		
+	}
 
 
 	@Override
@@ -54,11 +52,11 @@ public class EasyGridWorld implements DomainGenerator {
 
 		Attribute xatt = new Attribute(domain, ATTX,
 				Attribute.AttributeType.INT);
-		xatt.setLims(0, 10);
+		xatt.setLims(0, mapx);
 
 		Attribute yatt = new Attribute(domain, ATTY,
 				Attribute.AttributeType.INT);
-		yatt.setLims(0, 10);
+		yatt.setLims(0, mapy);
 
 		ObjectClass agentClass = new ObjectClass(domain, CLASSAGENT);
 		agentClass.addAttribute(xatt);
@@ -87,8 +85,8 @@ public class EasyGridWorld implements DomainGenerator {
 
 		ObjectInstance location = new MutableObjectInstance(
 				domain.getObjectClass(CLASSLOCATION), "location0");
-		location.setValue(ATTX, 10);
-		location.setValue(ATTY, 10);
+		location.setValue(ATTX, mapx);
+		location.setValue(ATTY, mapy);
 
 		s.addObject(agent);
 		s.addObject(location);

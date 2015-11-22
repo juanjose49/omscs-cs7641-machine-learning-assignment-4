@@ -2,7 +2,6 @@ package burlap.assignment4.util;
 
 import java.util.List;
 
-import burlap.assignment4.easy.EasyGridWorld;
 import burlap.behavior.policy.GreedyQPolicy;
 import burlap.behavior.policy.Policy;
 import burlap.oomdp.core.objects.ObjectInstance;
@@ -12,7 +11,6 @@ import burlap.oomdp.core.values.Value;
 public class MapPrinter {
 
 	public static void printMap(int[][] map){
-		System.out.println("/////Grid World Analysis/////\n");
 		System.out.println("This is your grid world:");
 		for (int j = 0; j<map[0].length; j++){
 	    	 System.out.print("[");

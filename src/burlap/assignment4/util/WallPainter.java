@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 
-import burlap.assignment4.easy.EasyGridWorld;
 import burlap.oomdp.core.states.State;
 import burlap.oomdp.visualizer.StaticPainter;
 
