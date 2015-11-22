@@ -15,7 +15,7 @@ import burlap.oomdp.visualizer.Visualizer;
 
 public class HardGridWorldLauncher {
 
-	private static boolean visualizeInitialGridWorld = false;
+	private static boolean visualizeInitialGridWorld = true;
 	private static boolean runValueIteration = true;
 	private static boolean runPolicyIteration = true;
 	private static boolean runQLearning = true;
