@@ -45,10 +45,10 @@ public class AnalysisRunner {
 	
 			// run planning from our initial state
 			p = vi.planFromState(initialState);
-	
+			AnalysisAggregator.addMillisecondsToFinishValueIteration((int) (System.nanoTime()-startTime)/1000000);
+
 			// evaluate the policy with one roll out visualize the trajectory
 			ea = p.evaluateBehavior(initialState, rf, tf);
-			AnalysisAggregator.addMillisecondsToFinishValueIteration((int) (System.nanoTime()-startTime)/1000000);
 			AnalysisAggregator.addNumberOfIterations(numIterations);
 			AnalysisAggregator.addStepsToFinishValueIteration(ea.numTimeSteps());
 		}
@@ -81,10 +81,10 @@ public class AnalysisRunner {
 	
 			// run planning from our initial state
 			p = pi.planFromState(initialState);
-	
+			AnalysisAggregator.addMillisecondsToFinishPolicyIteration((int) (System.nanoTime()-startTime)/1000000);
+
 			// evaluate the policy with one roll out visualize the trajectory
 			ea = p.evaluateBehavior(initialState, rf, tf);
-			AnalysisAggregator.addMillisecondsToFinishPolicyIteration((int) (System.nanoTime()-startTime)/1000000);
 			AnalysisAggregator.addStepsToFinishPolicyIteration(ea.numTimeSteps());
 		}
 
