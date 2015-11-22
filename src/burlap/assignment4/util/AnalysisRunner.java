@@ -33,6 +33,7 @@ public class AnalysisRunner {
 		EpisodeAnalysis ea = null;
 		int increment = MAX_ITERATIONS/NUM_INTERVALS;
 		for(int numIterations = increment;numIterations<=MAX_ITERATIONS;numIterations+=increment ){
+			long startTime = System.nanoTime();
 			vi = new ValueIteration(
 					domain,
 					rf,
@@ -47,6 +48,7 @@ public class AnalysisRunner {
 	
 			// evaluate the policy with one roll out visualize the trajectory
 			ea = p.evaluateBehavior(initialState, rf, tf);
+			AnalysisAggregator.addMillisecondsToFinishValueIteration((int) (System.nanoTime()-startTime)/1000000);
 			AnalysisAggregator.addNumberOfIterations(numIterations);
 			AnalysisAggregator.addStepsToFinishValueIteration(ea.numTimeSteps());
 		}
@@ -68,6 +70,7 @@ public class AnalysisRunner {
 		EpisodeAnalysis ea = null;
 		int increment = MAX_ITERATIONS/NUM_INTERVALS;
 		for(int numIterations = increment;numIterations<=MAX_ITERATIONS;numIterations+=increment ){
+			long startTime = System.nanoTime();
 			 pi = new PolicyIteration(
 					domain,
 					rf,
@@ -81,6 +84,7 @@ public class AnalysisRunner {
 	
 			// evaluate the policy with one roll out visualize the trajectory
 			ea = p.evaluateBehavior(initialState, rf, tf);
+			AnalysisAggregator.addMillisecondsToFinishPolicyIteration((int) (System.nanoTime()-startTime)/1000000);
 			AnalysisAggregator.addStepsToFinishPolicyIteration(ea.numTimeSteps());
 		}
 
@@ -102,6 +106,8 @@ public class AnalysisRunner {
 		EpisodeAnalysis ea = null;
 		int increment = MAX_ITERATIONS/NUM_INTERVALS;
 		for(int numIterations = increment;numIterations<=MAX_ITERATIONS;numIterations+=increment ){
+			long startTime = System.nanoTime();
+
 			agent = new QLearning(
 				domain,
 				0.99,
@@ -114,6 +120,7 @@ public class AnalysisRunner {
 			}
 			agent.initializeForPlanning(rf, tf, 1);
 			p = agent.planFromState(initialState);
+			AnalysisAggregator.addMillisecondsToFinishQLearning((int) (System.nanoTime()-startTime)/1000000);
 			AnalysisAggregator.addStepsToFinishQLearning(ea.numTimeSteps());
 
 		}

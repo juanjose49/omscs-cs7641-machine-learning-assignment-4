@@ -9,6 +9,10 @@ public final class AnalysisAggregator {
 	private static List<Integer> stepsToFinishPolicyIteration = new ArrayList<Integer>();
 	private static List<Integer> stepsToFinishQLearning = new ArrayList<Integer>();
 	
+	private static List<Integer> millisecondsToFinishValueIteration = new ArrayList<Integer>();
+	private static List<Integer> millisecondsToFinishPolicyIteration = new ArrayList<Integer>();
+	private static List<Integer> millisecondsToFinishQLearning = new ArrayList<Integer>();
+	
 	public static void addNumberOfIterations(Integer numIterations1){
 		numIterations.add(numIterations1);
 	}
@@ -33,6 +37,30 @@ public final class AnalysisAggregator {
 		System.out.print("Q Learning,");	
 		printList(stepsToFinishQLearning);
 	}
+	
+
+	public static void addMillisecondsToFinishValueIteration(Integer millisecondsToFinishValueIteration1){
+		millisecondsToFinishValueIteration.add(millisecondsToFinishValueIteration1);
+	}
+	public static void addMillisecondsToFinishPolicyIteration(Integer millisecondsToFinishPolicyIteration1){
+		millisecondsToFinishPolicyIteration.add(millisecondsToFinishPolicyIteration1);
+	}
+	public static void addMillisecondsToFinishQLearning(Integer millisecondsToFinishQLearning1){
+		millisecondsToFinishQLearning.add(millisecondsToFinishQLearning1);
+	}
+	public static void printValueIterationTimeResults(){
+		System.out.print("Value Iteration,");	
+		printList(millisecondsToFinishValueIteration);
+	}
+	public static void printPolicyIterationTimeResults(){
+		System.out.print("Policy Iteration,");	
+		printList(millisecondsToFinishPolicyIteration);
+	}
+	public static void printQLearningTimeResults(){
+		System.out.print("Q Learning,");	
+		printList(millisecondsToFinishQLearning);
+	}
+	
 	public static void printNumIterations(){
 		System.out.print("Iterations,");	
 		printList(numIterations);
@@ -47,11 +75,19 @@ public final class AnalysisAggregator {
 		System.out.println();
 	}
 	public static void printAggregateAnalysis(){
-		System.out.println("//Aggregate Analysis//");
-		System.out.println("This is your aggregate analysis:");
+		System.out.println("//Aggregate Analysis//\n");
+		System.out.println("The data below shows the number of steps/actions the agent required to reach \n"
+				+ "the terminal state given the number of iterations the algorithm was run.");
 		printNumIterations();
 		printValueIterationResults();
 		printPolicyIterationResults();
 		printQLearningResults();
+		System.out.println();
+		System.out.println("The data below shows the number of milliseconds the agent required to reach \n"
+				+ "the terminal state given the number of iterations the algorithm was run.");
+		printNumIterations();
+		printValueIterationTimeResults();
+		printPolicyIterationTimeResults();
+		printQLearningTimeResults();
 	}
 }
