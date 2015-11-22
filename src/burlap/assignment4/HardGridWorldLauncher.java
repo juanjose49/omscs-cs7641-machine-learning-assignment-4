@@ -15,47 +15,39 @@ import burlap.oomdp.visualizer.Visualizer;
 
 public class HardGridWorldLauncher {
 
-	private static boolean visualizeInitialGridWorld = false;
+	private static boolean visualizeInitialGridWorld = true;
 	private static boolean runValueIteration = true;
 	private static boolean runPolicyIteration = true;
 	private static boolean runQLearning = true;
 	
-	private static Integer MAX_ITERATIONS = 5;
-	private static Integer NUM_INTERVALS = 5;
+	private static Integer MAX_ITERATIONS = 100;
+	private static Integer NUM_INTERVALS = 100;
 
 	protected static int[][] map = new int[][] { 
-		{ 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-		{ 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-		{ 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-		{ 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-		{ 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-		{ 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-		{ 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-		{ 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-		{ 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-		{ 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-		{ 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-		{ 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-		{ 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
-		{ 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
-		{ 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
-		{ 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
-		{ 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
-		{ 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
-		{ 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
-		{ 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
- };
+										{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+										{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+										{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+										{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+										{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+										{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+										{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+										{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+										{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+										{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+										{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},};
+
+	private static Integer mapLen = map.length-1;
 
 	public static void main(String[] args) {
 
-		BasicGridWorld gen = new BasicGridWorld(map,19,19); //0 index map is 25x25
+		BasicGridWorld gen = new BasicGridWorld(map,mapLen,mapLen); //0 index map is 11X11
 		Domain domain = gen.generateDomain();
 
 		State initialState = BasicGridWorld.getExampleState(domain);
 
-		RewardFunction rf = new BasicRewardFunction(19, 19); //Goal is at the top right grid
-		TerminalFunction tf = new BasicTerminalFunction(19, 19); //Goal is at the top right grid
-
+		RewardFunction rf = new BasicRewardFunction(mapLen, mapLen); //Goal is at the top right grid
+		TerminalFunction tf = new BasicTerminalFunction(mapLen, mapLen); //Goal is at the top right grid
+		
 		SimulatedEnvironment env = new SimulatedEnvironment(domain, rf, tf,
 				initialState);
 		//Print the map that is being analyzed
