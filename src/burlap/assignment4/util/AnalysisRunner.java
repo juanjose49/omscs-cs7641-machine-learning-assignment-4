@@ -40,7 +40,7 @@ public class AnalysisRunner {
 					tf,
 					0.99,
 					new SimpleHashableStateFactory(),
-					0, numIterations); //Added a very high delta number in order to guarantee that value iteration occurs the max number of iterations
+					-1, numIterations); //Added a very high delta number in order to guarantee that value iteration occurs the max number of iterations
 										   //for comparison with the other algorithms.
 	
 			// run planning from our initial state
@@ -77,7 +77,7 @@ public class AnalysisRunner {
 					tf,
 					0.99,
 					new SimpleHashableStateFactory(),
-					0, 1, numIterations);
+					-1, 1, numIterations);
 	
 			// run planning from our initial state
 			p = pi.planFromState(initialState);
