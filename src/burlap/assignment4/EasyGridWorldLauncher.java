@@ -25,9 +25,9 @@ public class EasyGridWorldLauncher {
 
 	protected static int[][] map = new int[][] { 
 			{ 0, 0, 0, 0, 0},
-			{ 0, 0, 0, 0, 0},
-			{ 0, 0, 0, 0, 0},
-			{ 0, 0, 0, 0, 0},
+			{ 0, 1, 1, 1, 0},
+			{ 0, 1, 1, 1, 0},
+			{ 0, 1, 1, 1, 0},
 			{ 0, 0, 0, 0, 0}, };
 	
 	private static Integer mapLen = map.length-1;
