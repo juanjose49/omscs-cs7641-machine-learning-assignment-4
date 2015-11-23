@@ -83,8 +83,8 @@ public final class AnalysisAggregator {
 		printPolicyIterationResults();
 		printQLearningResults();
 		System.out.println();
-		System.out.println("The data below shows the number of milliseconds the agent required to reach \n"
-				+ "the terminal state given the number of iterations the algorithm was run.");
+		System.out.println("The data below shows the number of milliseconds the algorithm required to generate \n"
+				+ "the optimal policy given the number of iterations the algorithm was run.");
 		printNumIterations();
 		printValueIterationTimeResults();
 		printPolicyIterationTimeResults();
