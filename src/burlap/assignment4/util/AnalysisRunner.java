@@ -92,7 +92,7 @@ public class AnalysisRunner {
 //		new EpisodeSequenceVisualizer(v, domain, Arrays.asList(ea));
 		AnalysisAggregator.printPolicyIterationResults();
 
-		MapPrinter.printPolicyMap(pi.getAllStates(), p, gen.getMap());
+		MapPrinter.printPolicyMap(getAllStates(domain,rf,tf,initialState), p, gen.getMap());
 		System.out.println("\n\n");
 
 	}
