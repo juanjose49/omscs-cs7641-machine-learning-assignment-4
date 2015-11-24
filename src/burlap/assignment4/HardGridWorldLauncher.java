@@ -34,7 +34,7 @@ public class HardGridWorldLauncher {
 										{ 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0},
 										{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 										{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-										{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},};
+										{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},};
 
 //	private static Integer mapLen = map.length-1;
 
@@ -57,7 +57,7 @@ public class HardGridWorldLauncher {
 				initialState);
 		//Print the map that is being analyzed
 		System.out.println("/////Hard Grid World Analysis/////\n");
-		MapPrinter.printMap(map);
+		MapPrinter.printMap(MapPrinter.matrixToMap(map));
 		
 		if (visualizeInitialGridWorld) {
 			visualizeInitialGridWorld(domain, gen, env);
