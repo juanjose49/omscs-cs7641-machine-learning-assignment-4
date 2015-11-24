@@ -26,7 +26,7 @@ public class EasyGridWorldLauncher {
 	protected static int[][] userMap = new int[][] { 
 			{ 0, 0, 0, 0, 0},
 			{ 0, 1, 1, 1, 0},
-			{ 0, 1, 1, 1, 0},
+//			{ 0, 1, 1, 1, 0},
 			{ 1, 0, 1, 1, 0},
 			{ 0, 0, 0, 0, 0}, };
 	
@@ -35,8 +35,8 @@ public class EasyGridWorldLauncher {
 	public static void main(String[] args) {
 		// convert to BURLAP indexing
 		int[][] map = MapPrinter.mapToMatrix(userMap);
-		int maxX = map[0].length-1;
-		int maxY = map.length-1;
+		int maxX = map.length-1;
+		int maxY = map[0].length-1;
 		// 
 
 //		BasicGridWorld gen = new BasicGridWorld(map,mapLen,mapLen); //0 index map is 11X11
