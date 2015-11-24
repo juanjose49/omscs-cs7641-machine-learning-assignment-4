@@ -66,11 +66,13 @@ public final class AnalysisAggregator {
 		printList(numIterations);
 	}
 	private static void printList(List<Integer> valueList){
+		int counter = 0;
 		for(int value : valueList){
 			System.out.print(String.valueOf(value));
-			if(value != valueList.get(valueList.size()-1)){
+			if(counter != valueList.size()-1){
 				System.out.print(",");
 			}
+			counter++;
 		}
 		System.out.println();
 	}
