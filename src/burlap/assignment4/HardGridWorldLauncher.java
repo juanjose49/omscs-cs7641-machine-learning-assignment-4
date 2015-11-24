@@ -23,7 +23,7 @@ public class HardGridWorldLauncher {
 	private static Integer MAX_ITERATIONS = 100;
 	private static Integer NUM_INTERVALS = 100;
 
-	protected static int[][] map = new int[][] { 
+	protected static int[][] userMap = new int[][] { 
 										{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 										{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 										{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -36,17 +36,25 @@ public class HardGridWorldLauncher {
 										{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 										{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},};
 
-	private static Integer mapLen = map.length-1;
+//	private static Integer mapLen = map.length-1;
 
 	public static void main(String[] args) {
+		// convert to BURLAP indexing
+		int[][] map = MapPrinter.mapToMatrix(userMap);
+		int maxX = map[0].length-1;
+		int maxY = map.length-1;
+		// 
 
-		BasicGridWorld gen = new BasicGridWorld(map,mapLen,mapLen); //0 index map is 11X11
+//		BasicGridWorld gen = new BasicGridWorld(map,mapLen,mapLen); //0 index map is 11X11
+		BasicGridWorld gen = new BasicGridWorld(map,maxX,maxY); //0 index map is 11X11
 		Domain domain = gen.generateDomain();
 
 		State initialState = BasicGridWorld.getExampleState(domain);
 
-		RewardFunction rf = new BasicRewardFunction(mapLen, mapLen); //Goal is at the top right grid
-		TerminalFunction tf = new BasicTerminalFunction(mapLen, mapLen); //Goal is at the top right grid
+//		RewardFunction rf = new BasicRewardFunction(mapLen, mapLen); //Goal is at the top right grid
+//		TerminalFunction tf = new BasicTerminalFunction(mapLen, mapLen); //Goal is at the top right grid
+		RewardFunction rf = new BasicRewardFunction(maxX,maxY); //Goal is at the top right grid
+		TerminalFunction tf = new BasicTerminalFunction(maxX,maxY); //Goal is at the top right grid
 		
 		SimulatedEnvironment env = new SimulatedEnvironment(domain, rf, tf,
 				initialState);
