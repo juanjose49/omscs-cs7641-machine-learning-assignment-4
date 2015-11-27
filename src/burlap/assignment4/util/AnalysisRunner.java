@@ -1,19 +1,25 @@
 package burlap.assignment4.util;
 
-import java.util.List;
-
 import burlap.assignment4.BasicGridWorld;
 import burlap.behavior.policy.Policy;
 import burlap.behavior.singleagent.EpisodeAnalysis;
+import burlap.behavior.singleagent.auxiliary.StateReachability;
+import burlap.behavior.singleagent.auxiliary.valuefunctionvis.ValueFunctionVisualizerGUI;
 import burlap.behavior.singleagent.learning.tdmethods.QLearning;
 import burlap.behavior.singleagent.planning.stochastic.policyiteration.PolicyIteration;
 import burlap.behavior.singleagent.planning.stochastic.valueiteration.ValueIteration;
+import burlap.behavior.valuefunction.ValueFunction;
+import burlap.domain.singleagent.gridworld.GridWorldDomain;
 import burlap.oomdp.core.Domain;
 import burlap.oomdp.core.TerminalFunction;
 import burlap.oomdp.core.states.State;
 import burlap.oomdp.singleagent.RewardFunction;
+import burlap.oomdp.singleagent.SADomain;
 import burlap.oomdp.singleagent.environment.SimulatedEnvironment;
+import burlap.oomdp.statehashing.HashableStateFactory;
 import burlap.oomdp.statehashing.SimpleHashableStateFactory;
+
+import java.util.List;
 
 public class AnalysisRunner {
 
@@ -59,8 +65,6 @@ public class AnalysisRunner {
 		MapPrinter.printPolicyMap(vi.getAllStates(), p, gen.getMap());
 		System.out.println("\n\n");
 	}
-	
-	
 
 	public void runPolicyIteration(BasicGridWorld gen, Domain domain,
 			State initialState, RewardFunction rf, TerminalFunction tf) {
@@ -69,14 +73,15 @@ public class AnalysisRunner {
 		Policy p = null;
 		EpisodeAnalysis ea = null;
 		int increment = MAX_ITERATIONS/NUM_INTERVALS;
+		final SimpleHashableStateFactory hashingFactory = new SimpleHashableStateFactory();
 		for(int numIterations = increment;numIterations<=MAX_ITERATIONS;numIterations+=increment ){
 			long startTime = System.nanoTime();
-			 pi = new PolicyIteration(
+			pi = new PolicyIteration(
 					domain,
 					rf,
 					tf,
 					0.99,
-					new SimpleHashableStateFactory(),
+					hashingFactory,
 					-1, 1, numIterations);
 	
 			// run planning from our initial state
@@ -94,6 +99,18 @@ public class AnalysisRunner {
 
 		MapPrinter.printPolicyMap(getAllStates(domain,rf,tf,initialState), p, gen.getMap());
 		System.out.println("\n\n");
+
+		//visualize the value function and policy.
+		simpleValueFunctionVis(pi, p, initialState, domain, hashingFactory);
+	}
+
+	public void simpleValueFunctionVis(ValueFunction valueFunction, Policy p, State initialState, Domain domain, HashableStateFactory hashingFactory){
+
+		List<State> allStates = StateReachability.getReachableStates(initialState,
+				(SADomain)domain, hashingFactory);
+		ValueFunctionVisualizerGUI gui = GridWorldDomain.getGridWorldValueFunctionVisualization(
+				allStates, valueFunction, p);
+		gui.initGUI();
 
 	}
 	
