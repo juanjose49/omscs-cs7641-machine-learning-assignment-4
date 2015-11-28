@@ -32,8 +32,8 @@ public class HardGridWorldLauncher {
 	private static boolean showQLearningPolicyMap = false;
 
 	//can be set to stop running VI and PI when the policy found
-	//is the same five times in a row
 	private static boolean runUntilConverge = false;
+	private static int convergeCount = 5;
 	
 	private static Integer MAX_ITERATIONS = 100;
 	private static Integer NUM_INTERVALS = 100;
@@ -81,7 +81,7 @@ public class HardGridWorldLauncher {
 			visualizeInitialGridWorld(domain, gen, env);
 		}
 		
-		AnalysisRunner runner = new AnalysisRunner(MAX_ITERATIONS,NUM_INTERVALS, runUntilConverge);
+		AnalysisRunner runner = new AnalysisRunner(MAX_ITERATIONS,NUM_INTERVALS, runUntilConverge, convergeCount);
 		if(runValueIteration){
 			runner.runValueIteration(gen,domain,initialState, rf, tf, showValueIterationPolicyMap);
 		}

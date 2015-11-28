@@ -35,8 +35,8 @@ public class EasyGridWorldLauncher {
 	private static Integer NUM_INTERVALS = 100;
 
 	//can be set to stop running VI and PI when the policy found
-	//is the same five times in a row
 	private static boolean runUntilConverge = false;
+	private static int convergeCount = 5;
 
 	protected static int[][] userMap = new int[][] { 
 			{ 0, 0, 0, 0, 0},
@@ -75,7 +75,7 @@ public class EasyGridWorldLauncher {
 			visualizeInitialGridWorld(domain, gen, env);
 		}
 		
-		AnalysisRunner runner = new AnalysisRunner(MAX_ITERATIONS,NUM_INTERVALS, runUntilConverge);
+		AnalysisRunner runner = new AnalysisRunner(MAX_ITERATIONS,NUM_INTERVALS, runUntilConverge, convergeCount);
 		if(runValueIteration){
 			runner.runValueIteration(gen,domain,initialState, rf, tf, showValueIterationPolicyMap);
 		}
@@ -136,6 +136,13 @@ public class EasyGridWorldLauncher {
 						}
 						if(split[0].equals("converge")){
 							runUntilConverge = Boolean.parseBoolean(split[1]);
+						}
+						if(split[0].equals("cc")){
+							try{
+								convergeCount = Integer.parseInt(split[1]);
+							} catch (NumberFormatException nfe){
+								System.out.println("Unable to parse converge count "+split[1]+" into integer. Defaulting to "+convergeCount);
+							}
 						}
 					} else {
 						System.out.println("invalid argument "+arg+". Use name=value format");
