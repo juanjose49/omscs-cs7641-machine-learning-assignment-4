@@ -38,6 +38,7 @@ public class AnalysisRunner {
 		Policy p = null;
 		EpisodeAnalysis ea = null;
 		int increment = MAX_ITERATIONS/NUM_INTERVALS;
+		final SimpleHashableStateFactory hashingFactory = new SimpleHashableStateFactory();
 		for(int numIterations = increment;numIterations<=MAX_ITERATIONS;numIterations+=increment ){
 			long startTime = System.nanoTime();
 			vi = new ValueIteration(
@@ -45,7 +46,7 @@ public class AnalysisRunner {
 					rf,
 					tf,
 					0.99,
-					new SimpleHashableStateFactory(),
+					hashingFactory,
 					-1, numIterations); //Added a very high delta number in order to guarantee that value iteration occurs the max number of iterations
 										   //for comparison with the other algorithms.
 	
@@ -57,6 +58,9 @@ public class AnalysisRunner {
 			ea = p.evaluateBehavior(initialState, rf, tf);
 			AnalysisAggregator.addNumberOfIterations(numIterations);
 			AnalysisAggregator.addStepsToFinishValueIteration(ea.numTimeSteps());
+
+			//visualize the value function and policy.
+			simpleValueFunctionVis(vi, p, initialState, domain, hashingFactory);
 		}
 		
 //		Visualizer v = gen.getVisualizer();
