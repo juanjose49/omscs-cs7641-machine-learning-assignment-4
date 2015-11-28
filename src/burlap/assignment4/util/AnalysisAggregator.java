@@ -1,5 +1,7 @@
 package burlap.assignment4.util;
 
+import burlap.oomdp.core.values.DoubleArrayValue;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +14,10 @@ public final class AnalysisAggregator {
 	private static List<Integer> millisecondsToFinishValueIteration = new ArrayList<Integer>();
 	private static List<Integer> millisecondsToFinishPolicyIteration = new ArrayList<Integer>();
 	private static List<Integer> millisecondsToFinishQLearning = new ArrayList<Integer>();
+
+	private static List<Double> rewardsForValueIteration = new ArrayList<Double>();
+	private static List<Double> rewardsForPolicyIteration = new ArrayList<Double>();
+	private static List<Double> rewardsForQLearning = new ArrayList<Double>();
 	
 	public static void addNumberOfIterations(Integer numIterations1){
 		numIterations.add(numIterations1);
@@ -48,19 +54,54 @@ public final class AnalysisAggregator {
 	public static void addMillisecondsToFinishQLearning(Integer millisecondsToFinishQLearning1){
 		millisecondsToFinishQLearning.add(millisecondsToFinishQLearning1);
 	}
+	public static void addValueIterationReward(double reward) {
+		rewardsForValueIteration.add(reward);
+	}
+	public static void addPolicyIterationReward(double reward) {
+		rewardsForPolicyIteration.add(reward);
+	}
+	public static void addQLearningReward(double reward) {
+		rewardsForQLearning.add(reward);
+	}
 	public static void printValueIterationTimeResults(){
 		System.out.print("Value Iteration,");	
 		printList(millisecondsToFinishValueIteration);
 	}
 	public static void printPolicyIterationTimeResults(){
-		System.out.print("Policy Iteration,");	
+		System.out.print("Policy Iteration Times,");
 		printList(millisecondsToFinishPolicyIteration);
 	}
+
+	public static void clearPITimeResults() {
+		millisecondsToFinishPolicyIteration.clear();
+		System.out.print("Policy Iteration Cleared\n");
+	}
+
+	public static void clearVITimeResults() {
+		millisecondsToFinishValueIteration.clear();
+		System.out.print("Value Iteration Times Cleared\n");
+	}
+
 	public static void printQLearningTimeResults(){
 		System.out.print("Q Learning,");	
 		printList(millisecondsToFinishQLearning);
 	}
-	
+
+	public static void printValueIterationRewards(){
+		System.out.print("Value Iteration Rewards,");
+		printDoubleList(rewardsForValueIteration);
+	}
+
+	public static void printPolicyIterationRewards(){
+		System.out.print("Policy Iteration Rewards,");
+		printDoubleList(rewardsForPolicyIteration);
+	}
+
+	public static void printQLearningRewards(){
+		System.out.print("Q Learning Rewards,");
+		printDoubleList(rewardsForQLearning);
+	}
+
 	public static void printNumIterations(){
 		System.out.print("Iterations,");	
 		printList(numIterations);
@@ -68,6 +109,17 @@ public final class AnalysisAggregator {
 	private static void printList(List<Integer> valueList){
 		int counter = 0;
 		for(int value : valueList){
+			System.out.print(String.valueOf(value));
+			if(counter != valueList.size()-1){
+				System.out.print(",");
+			}
+			counter++;
+		}
+		System.out.println();
+	}
+	private static void printDoubleList(List<Double> valueList){
+		int counter = 0;
+		for(double value : valueList){
 			System.out.print(String.valueOf(value));
 			if(counter != valueList.size()-1){
 				System.out.print(",");
@@ -91,5 +143,12 @@ public final class AnalysisAggregator {
 		printValueIterationTimeResults();
 		printPolicyIterationTimeResults();
 		printQLearningTimeResults();
+
+		System.out.println("\nThe data below shows the total reward gained for \n"
+				+ "the optimal policy given the number of iterations the algorithm was run.");
+		printNumIterations();
+		printValueIterationRewards();
+		printPolicyIterationRewards();
+		printQLearningRewards();
 	}
 }
