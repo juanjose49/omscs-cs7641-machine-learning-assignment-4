@@ -14,11 +14,20 @@ import burlap.oomdp.singleagent.explorer.VisualExplorer;
 import burlap.oomdp.visualizer.Visualizer;
 
 public class HardGridWorldLauncher {
-
-	private static boolean visualizeInitialGridWorld = true;
-	private static boolean runValueIteration = true;
+	//These are some boolean variables that affect what will actually get executed
+	private static boolean visualizeInitialGridWorld = true; //Loads a GUI with the agent, walls, and goal
+	
+	//runValueIteration, runPolicyIteration, and runQLearning indicate which algorithms will run in the experiment
+	private static boolean runValueIteration = true; 
 	private static boolean runPolicyIteration = true;
 	private static boolean runQLearning = true;
+	
+	//showValueIterationPolicyMap, showPolicyIterationPolicyMap, and showQLearningPolicyMap will open a GUI
+	//you can use to visualize the policy maps. Consider only having one variable set to true at a time
+	//since the pop-up window does not indicate what algorithm was used to generate the map.
+	private static boolean showValueIterationPolicyMap = true; 
+	private static boolean showPolicyIterationPolicyMap = false;
+	private static boolean showQLearningPolicyMap = false;
 	
 	private static Integer MAX_ITERATIONS = 100;
 	private static Integer NUM_INTERVALS = 100;
@@ -65,13 +74,13 @@ public class HardGridWorldLauncher {
 		
 		AnalysisRunner runner = new AnalysisRunner(MAX_ITERATIONS,NUM_INTERVALS);
 		if(runValueIteration){
-			runner.runValueIteration(gen,domain,initialState, rf, tf);
+			runner.runValueIteration(gen,domain,initialState, rf, tf, showValueIterationPolicyMap);
 		}
 		if(runPolicyIteration){
-			runner.runPolicyIteration(gen,domain,initialState, rf, tf);
+			runner.runPolicyIteration(gen,domain,initialState, rf, tf, showPolicyIterationPolicyMap);
 		}
 		if(runQLearning){
-			runner.runQLearning(gen,domain,initialState, rf, tf, env);
+			runner.runQLearning(gen,domain,initialState, rf, tf, env, showQLearningPolicyMap);
 		}
 		AnalysisAggregator.printAggregateAnalysis();
 	}

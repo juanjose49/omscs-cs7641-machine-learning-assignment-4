@@ -23,6 +23,8 @@ import java.util.List;
 
 public class AnalysisRunner {
 
+	final SimpleHashableStateFactory hashingFactory = new SimpleHashableStateFactory();
+
 	private int MAX_ITERATIONS;
 	private int NUM_INTERVALS;
 
@@ -30,9 +32,15 @@ public class AnalysisRunner {
 		this.MAX_ITERATIONS = MAX_ITERATIONS;
 		this.NUM_INTERVALS = NUM_INTERVALS;
 		
+		int increment = MAX_ITERATIONS/NUM_INTERVALS;
+		for(int numIterations = increment;numIterations<=MAX_ITERATIONS;numIterations+=increment ){
+			AnalysisAggregator.addNumberOfIterations(numIterations);
+
+		}
+
 	}
 	public void runValueIteration(BasicGridWorld gen, Domain domain,
-			State initialState, RewardFunction rf, TerminalFunction tf) {
+			State initialState, RewardFunction rf, TerminalFunction tf, boolean showPolicyMap) {
 		System.out.println("//Value Iteration Analysis//");
 		ValueIteration vi = null;
 		Policy p = null;
@@ -45,7 +53,7 @@ public class AnalysisRunner {
 					rf,
 					tf,
 					0.99,
-					new SimpleHashableStateFactory(),
+					hashingFactory,
 					-1, numIterations); //Added a very high delta number in order to guarantee that value iteration occurs the max number of iterations
 										   //for comparison with the other algorithms.
 	
@@ -55,7 +63,6 @@ public class AnalysisRunner {
 
 			// evaluate the policy with one roll out visualize the trajectory
 			ea = p.evaluateBehavior(initialState, rf, tf);
-			AnalysisAggregator.addNumberOfIterations(numIterations);
 			AnalysisAggregator.addStepsToFinishValueIteration(ea.numTimeSteps());
 		}
 		
@@ -64,16 +71,18 @@ public class AnalysisRunner {
 		AnalysisAggregator.printValueIterationResults();
 		MapPrinter.printPolicyMap(vi.getAllStates(), p, gen.getMap());
 		System.out.println("\n\n");
+		if(showPolicyMap){
+			simpleValueFunctionVis((ValueFunction)vi, p, initialState, domain, hashingFactory);
+		}
 	}
 
 	public void runPolicyIteration(BasicGridWorld gen, Domain domain,
-			State initialState, RewardFunction rf, TerminalFunction tf) {
+			State initialState, RewardFunction rf, TerminalFunction tf, boolean showPolicyMap) {
 		System.out.println("//Policy Iteration Analysis//");
 		PolicyIteration pi = null;
 		Policy p = null;
 		EpisodeAnalysis ea = null;
 		int increment = MAX_ITERATIONS/NUM_INTERVALS;
-		final SimpleHashableStateFactory hashingFactory = new SimpleHashableStateFactory();
 		for(int numIterations = increment;numIterations<=MAX_ITERATIONS;numIterations+=increment ){
 			long startTime = System.nanoTime();
 			pi = new PolicyIteration(
@@ -101,10 +110,13 @@ public class AnalysisRunner {
 		System.out.println("\n\n");
 
 		//visualize the value function and policy.
-		simpleValueFunctionVis(pi, p, initialState, domain, hashingFactory);
+		if(showPolicyMap){
+			simpleValueFunctionVis(pi, p, initialState, domain, hashingFactory);
+		}
 	}
 
-	public void simpleValueFunctionVis(ValueFunction valueFunction, Policy p, State initialState, Domain domain, HashableStateFactory hashingFactory){
+	public void simpleValueFunctionVis(ValueFunction valueFunction, Policy p, 
+			State initialState, Domain domain, HashableStateFactory hashingFactory){
 
 		List<State> allStates = StateReachability.getReachableStates(initialState,
 				(SADomain)domain, hashingFactory);
@@ -115,7 +127,8 @@ public class AnalysisRunner {
 	}
 	
 	public void runQLearning(BasicGridWorld gen, Domain domain,
-			State initialState, RewardFunction rf, TerminalFunction tf,SimulatedEnvironment env) {
+			State initialState, RewardFunction rf, TerminalFunction tf,
+			SimulatedEnvironment env, boolean showPolicyMap) {
 		System.out.println("//Q Learning Analysis//");
 
 		QLearning agent = null;
@@ -128,7 +141,7 @@ public class AnalysisRunner {
 			agent = new QLearning(
 				domain,
 				0.99,
-				new SimpleHashableStateFactory(),
+				hashingFactory,
 				0.99, 0.99);
 			
 			for (int i = 0; i < numIterations; i++) {
@@ -145,24 +158,11 @@ public class AnalysisRunner {
 		MapPrinter.printPolicyMap(getAllStates(domain,rf,tf,initialState), p, gen.getMap());
 		System.out.println("\n\n");
 
-		
-//		agent = new QLearning(
-//				domain,
-//				0.99,
-//				new SimpleHashableStateFactory(),
-//				0.99, 0.99);
-//		agent.initializeForPlanning(rf, tf, 1);
-//		p = agent.planFromState(initialState);
-//		MapPrinter.printPolicyMap(getAllStates(domain,rf,tf,initialState), p, gen);
+		//visualize the value function and policy.
+		if(showPolicyMap){
+			simpleValueFunctionVis((ValueFunction)agent, p, initialState, domain, hashingFactory);
+		}
 
-//		// run Q-learning and store results in a list
-//		List<EpisodeAnalysis> episodes = new ArrayList<EpisodeAnalysis>(1000);
-//		for (int i = 0; i < 1000; i++) {
-//			episodes.add(agent.runLearningEpisode(env));
-//			env.resetEnvironment();
-//		}
-//		Visualizer v = gen.getVisualizer();
-//		new EpisodeSequenceVisualizer(v, domain, episodes);
 	}
 	
 	private static List<State> getAllStates(Domain domain,
@@ -174,7 +174,7 @@ public class AnalysisRunner {
 				0.99,
 				new SimpleHashableStateFactory(),
 				.5, 100);
-		Policy p = vi.planFromState(initialState);
+		vi.planFromState(initialState);
 
 		return vi.getAllStates();
 	}
