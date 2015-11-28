@@ -63,7 +63,7 @@ public class AnalysisRunner {
 
 			// evaluate the policy with one roll out visualize the trajectory
 			ea = p.evaluateBehavior(initialState, rf, tf);
-			System.out.println("Iterations: " + numIterations +", reward: "+calcRewardInEpisode(ea));
+			AnalysisAggregator.addValueIterationReward(calcRewardInEpisode(ea));
 			AnalysisAggregator.addStepsToFinishValueIteration(ea.numTimeSteps());
 		}
 		
@@ -100,7 +100,7 @@ public class AnalysisRunner {
 
 			// evaluate the policy with one roll out visualize the trajectory
 			ea = p.evaluateBehavior(initialState, rf, tf);
-			System.out.println("Iterations: " + numIterations +", reward: "+calcRewardInEpisode(ea));
+			AnalysisAggregator.addPolicyIterationReward(calcRewardInEpisode(ea));
 			AnalysisAggregator.addStepsToFinishPolicyIteration(ea.numTimeSteps());
 		}
 
@@ -152,7 +152,7 @@ public class AnalysisRunner {
 			}
 			agent.initializeForPlanning(rf, tf, 1);
 			p = agent.planFromState(initialState);
-			System.out.println("Learning episodes: " + numIterations +", reward: "+calcRewardInEpisode(ea));
+			AnalysisAggregator.addQLearningReward(calcRewardInEpisode(ea));
 			AnalysisAggregator.addMillisecondsToFinishQLearning((int) (System.nanoTime()-startTime)/1000000);
 			AnalysisAggregator.addStepsToFinishQLearning(ea.numTimeSteps());
 
