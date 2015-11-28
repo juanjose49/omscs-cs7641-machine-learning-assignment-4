@@ -68,18 +68,8 @@ public final class AnalysisAggregator {
 		printList(millisecondsToFinishValueIteration);
 	}
 	public static void printPolicyIterationTimeResults(){
-		System.out.print("Policy Iteration Times,");
+		System.out.print("Policy Iteration,");
 		printList(millisecondsToFinishPolicyIteration);
-	}
-
-	public static void clearPITimeResults() {
-		millisecondsToFinishPolicyIteration.clear();
-		System.out.print("Policy Iteration Cleared\n");
-	}
-
-	public static void clearVITimeResults() {
-		millisecondsToFinishValueIteration.clear();
-		System.out.print("Value Iteration Times Cleared\n");
 	}
 
 	public static void printQLearningTimeResults(){
