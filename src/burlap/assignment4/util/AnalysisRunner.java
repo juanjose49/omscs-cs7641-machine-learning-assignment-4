@@ -27,11 +27,13 @@ public class AnalysisRunner {
 
 	private int MAX_ITERATIONS;
 	private int NUM_INTERVALS;
+	private boolean runUntilConvergence;
 
-	public AnalysisRunner(int MAX_ITERATIONS, int NUM_INTERVALS){
+	public AnalysisRunner(int MAX_ITERATIONS, int NUM_INTERVALS, boolean converge){
 		this.MAX_ITERATIONS = MAX_ITERATIONS;
 		this.NUM_INTERVALS = NUM_INTERVALS;
-		
+		this.runUntilConvergence = converge;
+
 		int increment = MAX_ITERATIONS/NUM_INTERVALS;
 		for(int numIterations = increment;numIterations<=MAX_ITERATIONS;numIterations+=increment ){
 			AnalysisAggregator.addNumberOfIterations(numIterations);
@@ -43,7 +45,10 @@ public class AnalysisRunner {
 			State initialState, RewardFunction rf, TerminalFunction tf, boolean showPolicyMap) {
 		System.out.println("//Value Iteration Analysis//");
 		ValueIteration vi = null;
+		Policy lastPolicy = null;
 		Policy p = null;
+		int samePolicy = 0;
+
 		EpisodeAnalysis ea = null;
 		int increment = MAX_ITERATIONS/NUM_INTERVALS;
 		for(int numIterations = increment;numIterations<=MAX_ITERATIONS;numIterations+=increment ){
@@ -64,6 +69,18 @@ public class AnalysisRunner {
 			// evaluate the policy with one roll out visualize the trajectory
 			ea = p.evaluateBehavior(initialState, rf, tf);
 			AnalysisAggregator.addStepsToFinishValueIteration(ea.numTimeSteps());
+
+			if(!(lastPolicy == null)){
+				if(lastPolicy.checkPolicyEqualityForDP(p, vi, tf)){
+					//System.out.println("Policies are the same for all states");
+					samePolicy++;
+					if(runUntilConvergence && samePolicy == 5){
+						System.out.println("Same policy for last five iterations starting at "+(numIterations-5));
+						break;
+					}
+				}
+			} 
+			lastPolicy = p;
 		}
 		
 //		Visualizer v = gen.getVisualizer();
@@ -80,7 +97,10 @@ public class AnalysisRunner {
 			State initialState, RewardFunction rf, TerminalFunction tf, boolean showPolicyMap) {
 		System.out.println("//Policy Iteration Analysis//");
 		PolicyIteration pi = null;
+		Policy lastPolicy = null;
 		Policy p = null;
+		int samePolicy = 0;
+		
 		EpisodeAnalysis ea = null;
 		int increment = MAX_ITERATIONS/NUM_INTERVALS;
 		for(int numIterations = increment;numIterations<=MAX_ITERATIONS;numIterations+=increment ){
@@ -100,6 +120,18 @@ public class AnalysisRunner {
 			// evaluate the policy with one roll out visualize the trajectory
 			ea = p.evaluateBehavior(initialState, rf, tf);
 			AnalysisAggregator.addStepsToFinishPolicyIteration(ea.numTimeSteps());
+
+			if(!(lastPolicy == null)){
+				if(lastPolicy.checkPolicyEqualityForDP(p, pi, tf)){
+					//System.out.println("Policies are the same for all states");
+					samePolicy++;
+					if(runUntilConvergence && samePolicy == 5){
+						System.out.println("Same policy for last five iterations starting at "+(numIterations-5));
+						break;
+					}
+				}
+			} 
+			lastPolicy = p;
 		}
 
 //		Visualizer v = gen.getVisualizer();

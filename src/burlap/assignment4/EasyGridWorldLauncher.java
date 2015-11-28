@@ -34,6 +34,10 @@ public class EasyGridWorldLauncher {
 	private static Integer MAX_ITERATIONS = 100;
 	private static Integer NUM_INTERVALS = 100;
 
+	//can be set to stop running VI and PI when the policy found
+	//is the same five times in a row
+	private static boolean runUntilConverge = false;
+
 	protected static int[][] userMap = new int[][] { 
 			{ 0, 0, 0, 0, 0},
 			{ 0, 1, 1, 1, 0},
@@ -71,7 +75,7 @@ public class EasyGridWorldLauncher {
 			visualizeInitialGridWorld(domain, gen, env);
 		}
 		
-		AnalysisRunner runner = new AnalysisRunner(MAX_ITERATIONS,NUM_INTERVALS);
+		AnalysisRunner runner = new AnalysisRunner(MAX_ITERATIONS,NUM_INTERVALS, runUntilConverge);
 		if(runValueIteration){
 			runner.runValueIteration(gen,domain,initialState, rf, tf, showValueIterationPolicyMap);
 		}
@@ -107,13 +111,13 @@ public class EasyGridWorldLauncher {
 				if(arg.contains("=")){
 					String[] split = arg.trim().split("=");
 					if(split.length > 1){
-						if(split[0].equals("rvi")){
+						if(split[0].equals("vi")){
 							runValueIteration = Boolean.parseBoolean(split[1]);
 						}
-						if(split[0].equals("rpi")){
+						if(split[0].equals("pi")){
 							runPolicyIteration = Boolean.parseBoolean(split[1]);
 						}
-						if(split[0].equals("rql")){
+						if(split[0].equals("ql")){
 							runQLearning = Boolean.parseBoolean(split[1]);
 						}
 						if(split[0].equals("iterations")){
@@ -129,6 +133,9 @@ public class EasyGridWorldLauncher {
 							} catch (NumberFormatException nfe){
 								System.out.println("Unable to parse intervals "+split[1]+" into integer. Defaulting to "+NUM_INTERVALS);
 							}
+						}
+						if(split[0].equals("converge")){
+							runUntilConverge = Boolean.parseBoolean(split[1]);
 						}
 					} else {
 						System.out.println("invalid argument "+arg+". Use name=value format");

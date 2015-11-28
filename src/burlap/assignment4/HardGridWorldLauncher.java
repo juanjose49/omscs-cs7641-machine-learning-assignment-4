@@ -30,6 +30,10 @@ public class HardGridWorldLauncher {
 	private static boolean showValueIterationPolicyMap = true; 
 	private static boolean showPolicyIterationPolicyMap = false;
 	private static boolean showQLearningPolicyMap = false;
+
+	//can be set to stop running VI and PI when the policy found
+	//is the same five times in a row
+	private static boolean runUntilConverge = false;
 	
 	private static Integer MAX_ITERATIONS = 100;
 	private static Integer NUM_INTERVALS = 100;
@@ -77,7 +81,7 @@ public class HardGridWorldLauncher {
 			visualizeInitialGridWorld(domain, gen, env);
 		}
 		
-		AnalysisRunner runner = new AnalysisRunner(MAX_ITERATIONS,NUM_INTERVALS);
+		AnalysisRunner runner = new AnalysisRunner(MAX_ITERATIONS,NUM_INTERVALS, runUntilConverge);
 		if(runValueIteration){
 			runner.runValueIteration(gen,domain,initialState, rf, tf, showValueIterationPolicyMap);
 		}
@@ -135,6 +139,9 @@ public class HardGridWorldLauncher {
 							} catch (NumberFormatException nfe){
 								System.out.println("Unable to parse intervals "+split[1]+" into integer. Defaulting to "+NUM_INTERVALS);
 							}
+						}
+						if(split[0].equals("converge")){
+							runUntilConverge = Boolean.parseBoolean(split[1]);
 						}
 					} else {
 						System.out.println("invalid argument "+arg+". Use name=value format");
