@@ -13,6 +13,8 @@ import burlap.oomdp.singleagent.environment.SimulatedEnvironment;
 import burlap.oomdp.singleagent.explorer.VisualExplorer;
 import burlap.oomdp.visualizer.Visualizer;
 
+import java.lang.NumberFormatException;
+
 public class HardGridWorldLauncher {
 	//These are some boolean variables that affect what will actually get executed
 	private static boolean visualizeInitialGridWorld = true; //Loads a GUI with the agent, walls, and goal
@@ -48,6 +50,9 @@ public class HardGridWorldLauncher {
 //	private static Integer mapLen = map.length-1;
 
 	public static void main(String[] args) {
+
+		parseArgs(args);
+
 		// convert to BURLAP indexing
 		int[][] map = MapPrinter.mapToMatrix(userMap);
 		int maxX = map.length-1;
