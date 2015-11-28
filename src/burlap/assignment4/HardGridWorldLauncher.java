@@ -100,6 +100,46 @@ public class HardGridWorldLauncher {
 		exp.initGUI();
 
 	}
+
+	private static void parseArgs(String[] args){
+		if(args != null && args.length > 0){
+			for(int i = 0; i<args.length; i++){
+				String arg = args[i];
+				if(arg.contains("=")){
+					String[] split = arg.trim().split("=");
+					if(split.length > 1){
+						if(split[0].equals("rvi")){
+							runValueIteration = Boolean.parseBoolean(split[1]);
+						}
+						if(split[0].equals("rpi")){
+							runPolicyIteration = Boolean.parseBoolean(split[1]);
+						}
+						if(split[0].equals("rql")){
+							runQLearning = Boolean.parseBoolean(split[1]);
+						}
+						if(split[0].equals("iterations")){
+							try{
+								MAX_ITERATIONS = Integer.parseInt(split[1]);
+							} catch (NumberFormatException nfe){
+								System.out.println("Unable to parse iterations "+split[1]+" into integer. Defaulting to "+MAX_ITERATIONS);
+							}
+						}
+						if(split[0].equals("intervals")){
+							try{
+								NUM_INTERVALS = Integer.parseInt(split[1]);
+							} catch (NumberFormatException nfe){
+								System.out.println("Unable to parse intervals "+split[1]+" into integer. Defaulting to "+NUM_INTERVALS);
+							}
+						}
+					} else {
+						System.out.println("invalid argument "+arg+". Use name=value format");
+					}
+				} else {
+					System.out.println("invalid argument "+arg+". Use name=value format");
+				}
+			}
+		}
+	}
 	
 
 }
