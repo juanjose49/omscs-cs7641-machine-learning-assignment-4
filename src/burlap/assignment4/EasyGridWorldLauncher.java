@@ -1,10 +1,7 @@
 package burlap.assignment4;
 
-import burlap.assignment4.util.AnalysisAggregator;
-import burlap.assignment4.util.AnalysisRunner;
-import burlap.assignment4.util.BasicRewardFunction;
-import burlap.assignment4.util.BasicTerminalFunction;
-import burlap.assignment4.util.MapPrinter;
+import burlap.assignment4.util.*;
+import burlap.behavior.singleagent.planning.stochastic.valueiteration.ValueIteration;
 import burlap.oomdp.core.Domain;
 import burlap.oomdp.core.TerminalFunction;
 import burlap.oomdp.core.states.State;
@@ -12,6 +9,8 @@ import burlap.oomdp.singleagent.RewardFunction;
 import burlap.oomdp.singleagent.environment.SimulatedEnvironment;
 import burlap.oomdp.singleagent.explorer.VisualExplorer;
 import burlap.oomdp.visualizer.Visualizer;
+import burlap.behavior.policy.EpsilonGreedy;
+import burlap.behavior.policy.BoltzmannQPolicy;
 
 public class EasyGridWorldLauncher {
 	//These are some boolean variables that affect what will actually get executed
@@ -21,7 +20,7 @@ public class EasyGridWorldLauncher {
 	private static boolean runValueIteration = true; 
 	private static boolean runPolicyIteration = true;
 	private static boolean runQLearning = true;
-	
+
 	//showValueIterationPolicyMap, showPolicyIterationPolicyMap, and showQLearningPolicyMap will open a GUI
 	//you can use to visualize the policy maps. Consider only having one variable set to true at a time
 	//since the pop-up window does not indicate what algorithm was used to generate the map.
@@ -61,7 +60,10 @@ public class EasyGridWorldLauncher {
 		//Print the map that is being analyzed
 		System.out.println("/////Easy Grid World Analysis/////\n");
 		MapPrinter.printMap(MapPrinter.matrixToMap(map));
-		
+
+        // Add Plotting
+        //AnalysisPlotter analysisPlotter = new AnalysisPlotter(env, domain, initialState, rf, tf, MAX_ITERATIONS, NUM_INTERVALS);
+
 		if (visualizeInitialGridWorld) {
 			visualizeInitialGridWorld(domain, gen, env);
 		}
@@ -74,9 +76,12 @@ public class EasyGridWorldLauncher {
 			runner.runPolicyIteration(gen,domain,initialState, rf, tf, showPolicyIterationPolicyMap);
 		}
 		if(runQLearning){
-			runner.runQLearning(gen,domain,initialState, rf, tf, env, showQLearningPolicyMap);
+			runner.runQLearning(gen,domain,initialState, rf, tf, env, showQLearningPolicyMap, "Boltzmann");
+            //analysisPlotter.addLearningAgent("qLearning", "qboltz");
 		}
 		AnalysisAggregator.printAggregateAnalysis();
+        //analysisPlotter.runExperiment();
+
 	}
 
 

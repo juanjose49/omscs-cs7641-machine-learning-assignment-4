@@ -190,6 +190,14 @@ public class EpisodeAnalysis {
 		}
 		return rewardSequence.get(t-1);
 	}
+
+	public double getTotalReward() {
+        double sum = 0;
+        for (Double reward : rewardSequence) {
+            sum += reward;
+        }
+        return sum;
+    }
 	
 	/**
 	 * Returns the number of time steps in this episode, which is equivalent to the number of states.

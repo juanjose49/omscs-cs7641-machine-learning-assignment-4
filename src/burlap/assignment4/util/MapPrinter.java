@@ -49,25 +49,22 @@ public class MapPrinter {
 			String action;
 			if(p instanceof GreedyQPolicy){
 				action = p.getAction(state).toString();
-			}else{
+			} else {
 			action = p.getAction(state).toString();			
 			}
-			switch(action){
-			case "east": 
-				action = ">";
-				break;
-			case "north":
-				action = "^";
-				break;
-			case "west":
-				action = "<";
-				break;
-			case "south":
-				action = "v";
-				break;
-			default:
-				action = "*";
-			}
+
+            if (action == "east") {
+                action = ">";
+            } else if (action == "north") {
+                action = "^";
+            } else if (action == "west") {
+                action = "<";
+            } else if (action == "south") {
+                action = "v";
+            } else {
+                action = "*";
+            }
+
 			policy[x][y] = action;
 
 		}

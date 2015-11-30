@@ -6,3 +6,10 @@ output
 target
 .idea
 out
+
+.DS_Store
+
+build/
+*.iml
+dist/
+

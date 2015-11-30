@@ -9,11 +9,25 @@ public class BasicTerminalFunction implements TerminalFunction {
 
 	int goalX;
 	int goalY;
+    int goalX2;
+    int goalY2;
+    boolean secondary;
 
 	public BasicTerminalFunction(int goalX, int goalY) {
 		this.goalX = goalX;
 		this.goalY = goalY;
+
+        secondary = false;
 	}
+
+    public BasicTerminalFunction(int goalX, int goalY, int goalX2, int goalY2) {
+        this.goalX = goalX;
+        this.goalY = goalY;
+
+        this.secondary = true;
+        this.goalX2 = goalX2;
+        this.goalY2 = goalY2;
+    }
 
 	@Override
 	public boolean isTerminal(State s) {
@@ -27,6 +41,10 @@ public class BasicTerminalFunction implements TerminalFunction {
 		if (ax == this.goalX && ay == this.goalY) {
 			return true;
 		}
+
+        if (secondary && ax == this.goalX2 && ay == this.goalY2) {
+            return true;
+        }
 
 		return false;
 	}

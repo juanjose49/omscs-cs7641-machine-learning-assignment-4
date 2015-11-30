@@ -12,6 +12,8 @@ import burlap.oomdp.singleagent.RewardFunction;
 import burlap.oomdp.singleagent.environment.SimulatedEnvironment;
 import burlap.oomdp.singleagent.explorer.VisualExplorer;
 import burlap.oomdp.visualizer.Visualizer;
+import burlap.behavior.policy.EpsilonGreedy;
+import burlap.behavior.policy.BoltzmannQPolicy;
 
 public class HardGridWorldLauncher {
 	//These are some boolean variables that affect what will actually get executed
@@ -40,7 +42,7 @@ public class HardGridWorldLauncher {
 										{ 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0},
 										{ 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0},
 										{ 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0},
-										{ 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0},
+										{ 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0},
 										{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 										{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 										{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},};
@@ -59,8 +61,8 @@ public class HardGridWorldLauncher {
 
 		State initialState = BasicGridWorld.getExampleState(domain);
 
-		RewardFunction rf = new BasicRewardFunction(maxX,maxY); //Goal is at the top right grid
-		TerminalFunction tf = new BasicTerminalFunction(maxX,maxY); //Goal is at the top right grid
+		RewardFunction rf = new BasicRewardFunction(maxX, maxY, 6, 6); //Goal is at the top right grid
+		TerminalFunction tf = new BasicTerminalFunction(maxX, maxY, 6, 6); //Goal is at the top right grid
 		
 		SimulatedEnvironment env = new SimulatedEnvironment(domain, rf, tf,
 				initialState);

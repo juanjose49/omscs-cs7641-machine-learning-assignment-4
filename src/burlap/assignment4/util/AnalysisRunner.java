@@ -1,6 +1,7 @@
 package burlap.assignment4.util;
 
 import burlap.assignment4.BasicGridWorld;
+import burlap.behavior.policy.EpsilonGreedy;
 import burlap.behavior.policy.Policy;
 import burlap.behavior.singleagent.EpisodeAnalysis;
 import burlap.behavior.singleagent.auxiliary.StateReachability;
@@ -64,6 +65,7 @@ public class AnalysisRunner {
 			// evaluate the policy with one roll out visualize the trajectory
 			ea = p.evaluateBehavior(initialState, rf, tf);
 			AnalysisAggregator.addStepsToFinishValueIteration(ea.numTimeSteps());
+            AnalysisAggregator.addRewardToValueIteration(ea.getTotalReward());
 		}
 		
 //		Visualizer v = gen.getVisualizer();
@@ -100,6 +102,7 @@ public class AnalysisRunner {
 			// evaluate the policy with one roll out visualize the trajectory
 			ea = p.evaluateBehavior(initialState, rf, tf);
 			AnalysisAggregator.addStepsToFinishPolicyIteration(ea.numTimeSteps());
+			AnalysisAggregator.addRewardToPolicyIteration(ea.getTotalReward());
 		}
 
 //		Visualizer v = gen.getVisualizer();
@@ -125,10 +128,16 @@ public class AnalysisRunner {
 		gui.initGUI();
 
 	}
-	
+
+    public void runQLearning(BasicGridWorld gen, Domain domain,
+                             State initialState, RewardFunction rf, TerminalFunction tf,
+                             SimulatedEnvironment env, boolean showPolicyMap) {
+        runQLearning(gen, domain, initialState, rf, tf, env, showPolicyMap, "epsilon");
+    }
+
 	public void runQLearning(BasicGridWorld gen, Domain domain,
 			State initialState, RewardFunction rf, TerminalFunction tf,
-			SimulatedEnvironment env, boolean showPolicyMap) {
+			SimulatedEnvironment env, boolean showPolicyMap, String learningPolicy) {
 		System.out.println("//Q Learning Analysis//");
 
 		QLearning agent = null;
@@ -142,7 +151,7 @@ public class AnalysisRunner {
 				domain,
 				0.99,
 				hashingFactory,
-				0.99, 0.99);
+				0.3, 0.1, learningPolicy);  // Give it a policy and maxEpisodes explicitly
 			
 			for (int i = 0; i < numIterations; i++) {
 				ea = agent.runLearningEpisode(env);
@@ -152,6 +161,7 @@ public class AnalysisRunner {
 			p = agent.planFromState(initialState);
 			AnalysisAggregator.addMillisecondsToFinishQLearning((int) (System.nanoTime()-startTime)/1000000);
 			AnalysisAggregator.addStepsToFinishQLearning(ea.numTimeSteps());
+            AnalysisAggregator.addRewardToQLearning(ea.getTotalReward());
 
 		}
 		AnalysisAggregator.printQLearningResults();
