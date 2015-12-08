@@ -1,16 +1,22 @@
-BURLAP
+OMSCS: Machine Learning - Assignment 4
 ======
 
-The master branch now contains the new BURLAP version 2; for version 1, use the branch "v1"
+Greetings! The purpose of this readme file is to offer the reader the steps required to make use of this BURLAP machine learning package with several of my own custom classes (included) and Eclipse (not included). This readme is split by the different Markov Decision Processes that were required for completion of the assignment. The instructions below will assume that you have already successfully downloaded and opened Eclipse.
 
-Repository for the ongoing development of the Brown-UMBC Reinforcement Learning And Planning (BURLAP) java library.
+Loading the custom BURLAP Package onto Eclipse:
+1. Once Eclipse is open make sure that the Navigator window is open by going to Window>Show View>Navigator. The navigator should now be on the left panel of Eclipse.
+2. Right click anywhere in the Navigator panel and click on “Import…”.
+3. Highlight the option that reads “Existing Projects into Workspace” and press “Next >”.
+4. While the “Select Root Directory” radio button is selected, enter the fully qualified path that leads to the directory “…/jjse3/assignment4” and press the enter/return key on your keyboard.
+5. In the “Projects” window below, you should now see the burlap-assignment-4 project with a checked checkbox beside it. Press the “Finish” button.
+6. Once the burlap-assignment-4 directory is visible in the Navigator window, expand the directory structure burlap-assignment-4/src/burlap/assignment4/. All of the classes pertinent to solving the problems in the analysis paper are available here.
 
-BURLAP is a java code library for the use and development of single or multi-agent planning and learning algorithms and domains to accompany them. At the core of the library is a rich state and domain representation framework based on the object-oriented MDP (OO-MDP) [1] paradigm that facilitates the creation of discrete, continuous, or relational domains that can consist of any number of different "objects" in the world. Planning and learning algorithms range from classic forward search planning to value function-based stochastic planning and learning algorithms. Also included is a set of analysis tools such as a common framework for the visualization of domains and agent performance in various domains.
+Running the Grid World: Low Difficulty Analysis:
+1. While inside the directory structure burlap-assignment-4/src/burlap/assignment4/ right-click on the EasyGridWorldLauncher.
+2. Go to the “Run As…” section and select “Java Application.
+3. All three algorithms will run and the aggregate analysis and optimal policies will be printed to the console.
 
-You can compile this code using ant. From the command line, type "ant dist" to produce the jar file, which will be created in the directory "dist". To compile the javadoc type: "ant doc" which will put the javadoc files in the directory "doc".
-
-You can find more information on BURLAP by visiting our website at:
-http://burlap.cs.brown.edu
-
-
-1. Diuk, C., Cohen, A., and Littman, M.L.. "An object-oriented representation for efficient reinforcement learning." Proceedings of the 25th international conference on Machine learning (2008). 240-270.
+Running the Grid World: High Difficulty Analysis:
+1. While inside the directory structure burlap-assignment-4/src/burlap/assignment4/ right-click on the HardGridWorldLauncher.
+2. Go to the “Run As…” section and select “Java Application.
+3. All three algorithms will run and the aggregate analysis and optimal policies will be printed to the console.
