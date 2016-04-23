@@ -1,6 +1,5 @@
 #OMSCS: Machine Learning - Assignment 4 
-##by Juan J. San Emeterio
-##LinkedIn.com/juanjsanemeterio
+##by Juan J. San Emeterio https://www.linkedin.com/in/juanjsanemeterio/
 
 
 Greetings! The purpose of this readme file is to offer the reader the steps required to make use of this BURLAP machine learning package with several of my own custom classes (included) and Eclipse (not included). This readme is split by the different Markov Decision Processes that were required for completion of the assignment. The instructions below will assume that you have already successfully downloaded and opened Eclipse.
