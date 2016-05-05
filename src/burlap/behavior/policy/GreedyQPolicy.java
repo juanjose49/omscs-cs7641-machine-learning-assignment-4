@@ -69,6 +69,7 @@ public class GreedyQPolicy extends Policy implements SolverDerivedPolicy {
 				maxQ = q.q;
 			}
 		}
+		//System.out.println("maxActions size "+maxActions.size());
 		int selected = rand.nextInt(maxActions.size());
 		//return translated action parameters if the action is parameterized with objects in a object identifier independent domain
 		AbstractGroundedAction srcA = maxActions.get(selected).a;

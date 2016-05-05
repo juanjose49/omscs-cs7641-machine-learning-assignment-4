@@ -27,11 +27,15 @@ public class AnalysisRunner {
 
 	private int MAX_ITERATIONS;
 	private int NUM_INTERVALS;
+	private boolean runUntilConvergence;
+	private int convergeCount;
 
 	public AnalysisRunner(int MAX_ITERATIONS, int NUM_INTERVALS){
 		this.MAX_ITERATIONS = MAX_ITERATIONS;
 		this.NUM_INTERVALS = NUM_INTERVALS;
-		
+		this.runUntilConvergence = false;
+		this.convergeCount = 5;
+
 		int increment = MAX_ITERATIONS/NUM_INTERVALS;
 		for(int numIterations = increment;numIterations<=MAX_ITERATIONS;numIterations+=increment ){
 			AnalysisAggregator.addNumberOfIterations(numIterations);
@@ -39,11 +43,29 @@ public class AnalysisRunner {
 		}
 
 	}
+
+	public AnalysisRunner(int MAX_ITERATIONS, int NUM_INTERVALS, boolean converge, int convergeCount){
+		this.MAX_ITERATIONS = MAX_ITERATIONS;
+		this.NUM_INTERVALS = NUM_INTERVALS;
+		this.runUntilConvergence = converge;
+		this.convergeCount = convergeCount;
+
+		int increment = MAX_ITERATIONS/NUM_INTERVALS;
+		for(int numIterations = increment;numIterations<=MAX_ITERATIONS;numIterations+=increment ){
+			AnalysisAggregator.addNumberOfIterations(numIterations);
+
+		}
+
+	}
+
 	public void runValueIteration(BasicGridWorld gen, Domain domain,
 			State initialState, RewardFunction rf, TerminalFunction tf, boolean showPolicyMap) {
 		System.out.println("//Value Iteration Analysis//");
 		ValueIteration vi = null;
+		Policy lastPolicy = null;
 		Policy p = null;
+		int samePolicy = 0;
+
 		EpisodeAnalysis ea = null;
 		int increment = MAX_ITERATIONS/NUM_INTERVALS;
 		for(int numIterations = increment;numIterations<=MAX_ITERATIONS;numIterations+=increment ){
@@ -65,6 +87,18 @@ public class AnalysisRunner {
 			ea = p.evaluateBehavior(initialState, rf, tf);
 			AnalysisAggregator.addValueIterationReward(calcRewardInEpisode(ea));
 			AnalysisAggregator.addStepsToFinishValueIteration(ea.numTimeSteps());
+
+			if(!(lastPolicy == null)){
+				if(lastPolicy.checkPolicyEqualityForDP(p, vi, tf)){
+					//System.out.println("Policies are the same for all states");
+					samePolicy++;
+					if(runUntilConvergence && samePolicy == convergeCount){
+						System.out.println("Same policy for last five iterations starting at "+(numIterations-convergeCount));
+						break;
+					}
+				}
+			} 
+			lastPolicy = p;
 		}
 		
 //		Visualizer v = gen.getVisualizer();
@@ -81,7 +115,10 @@ public class AnalysisRunner {
 			State initialState, RewardFunction rf, TerminalFunction tf, boolean showPolicyMap) {
 		System.out.println("//Policy Iteration Analysis//");
 		PolicyIteration pi = null;
+		Policy lastPolicy = null;
 		Policy p = null;
+		int samePolicy = 0;
+
 		EpisodeAnalysis ea = null;
 		int increment = MAX_ITERATIONS/NUM_INTERVALS;
 		for(int numIterations = increment;numIterations<=MAX_ITERATIONS;numIterations+=increment ){
@@ -102,6 +139,18 @@ public class AnalysisRunner {
 			ea = p.evaluateBehavior(initialState, rf, tf);
 			AnalysisAggregator.addPolicyIterationReward(calcRewardInEpisode(ea));
 			AnalysisAggregator.addStepsToFinishPolicyIteration(ea.numTimeSteps());
+
+			if(!(lastPolicy == null)){
+				if(lastPolicy.checkPolicyEqualityForDP(p, pi, tf)){
+					//System.out.println("Policies are the same for all states");
+					samePolicy++;
+					if(runUntilConvergence && samePolicy == convergeCount){
+						System.out.println("Same policy for last "+convergeCount+" iterations starting at "+(numIterations-convergeCount));
+						break;
+					}
+				}
+			} 
+			lastPolicy = p;
 		}
 
 //		Visualizer v = gen.getVisualizer();

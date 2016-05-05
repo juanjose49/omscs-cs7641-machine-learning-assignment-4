@@ -13,6 +13,8 @@ import burlap.oomdp.singleagent.environment.SimulatedEnvironment;
 import burlap.oomdp.singleagent.explorer.VisualExplorer;
 import burlap.oomdp.visualizer.Visualizer;
 
+import java.lang.NumberFormatException;
+
 public class EasyGridWorldLauncher {
 	//These are some boolean variables that affect what will actually get executed
 	private static boolean visualizeInitialGridWorld = true; //Loads a GUI with the agent, walls, and goal
@@ -32,6 +34,10 @@ public class EasyGridWorldLauncher {
 	private static Integer MAX_ITERATIONS = 100;
 	private static Integer NUM_INTERVALS = 100;
 
+	//can be set to stop running VI and PI when the policy found
+	private static boolean runUntilConverge = false;
+	private static int convergeCount = 5;
+
 	protected static int[][] userMap = new int[][] { 
 			{ 0, 0, 0, 0, 0},
 			{ 0, 1, 1, 1, 0},
@@ -42,6 +48,9 @@ public class EasyGridWorldLauncher {
 //	private static Integer mapLen = map.length-1;
 
 	public static void main(String[] args) {
+
+		parseArgs(args);
+
 		// convert to BURLAP indexing
 		int[][] map = MapPrinter.mapToMatrix(userMap);
 		int maxX = map.length-1;
@@ -66,7 +75,7 @@ public class EasyGridWorldLauncher {
 			visualizeInitialGridWorld(domain, gen, env);
 		}
 		
-		AnalysisRunner runner = new AnalysisRunner(MAX_ITERATIONS,NUM_INTERVALS);
+		AnalysisRunner runner = new AnalysisRunner(MAX_ITERATIONS,NUM_INTERVALS, runUntilConverge, convergeCount);
 		if(runValueIteration){
 			runner.runValueIteration(gen,domain,initialState, rf, tf, showValueIterationPolicyMap);
 		}
@@ -93,6 +102,56 @@ public class EasyGridWorldLauncher {
 
 		exp.initGUI();
 
+	}
+
+	private static void parseArgs(String[] args){
+		if(args != null && args.length > 0){
+			for(int i = 0; i<args.length; i++){
+				String arg = args[i];
+				if(arg.contains("=")){
+					String[] split = arg.trim().split("=");
+					if(split.length > 1){
+						if(split[0].equals("vi")){
+							runValueIteration = Boolean.parseBoolean(split[1]);
+						}
+						if(split[0].equals("pi")){
+							runPolicyIteration = Boolean.parseBoolean(split[1]);
+						}
+						if(split[0].equals("ql")){
+							runQLearning = Boolean.parseBoolean(split[1]);
+						}
+						if(split[0].equals("iterations")){
+							try{
+								MAX_ITERATIONS = Integer.parseInt(split[1]);
+							} catch (NumberFormatException nfe){
+								System.out.println("Unable to parse iterations "+split[1]+" into integer. Defaulting to "+MAX_ITERATIONS);
+							}
+						}
+						if(split[0].equals("intervals")){
+							try{
+								NUM_INTERVALS = Integer.parseInt(split[1]);
+							} catch (NumberFormatException nfe){
+								System.out.println("Unable to parse intervals "+split[1]+" into integer. Defaulting to "+NUM_INTERVALS);
+							}
+						}
+						if(split[0].equals("converge")){
+							runUntilConverge = Boolean.parseBoolean(split[1]);
+						}
+						if(split[0].equals("cc")){
+							try{
+								convergeCount = Integer.parseInt(split[1]);
+							} catch (NumberFormatException nfe){
+								System.out.println("Unable to parse converge count "+split[1]+" into integer. Defaulting to "+convergeCount);
+							}
+						}
+					} else {
+						System.out.println("invalid argument "+arg+". Use name=value format");
+					}
+				} else {
+					System.out.println("invalid argument "+arg+". Use name=value format");
+				}
+			}
+		}
 	}
 	
 

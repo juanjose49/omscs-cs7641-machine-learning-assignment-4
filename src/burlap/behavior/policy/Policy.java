@@ -3,6 +3,9 @@ package burlap.behavior.policy;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Iterator;
+
+import burlap.behavior.singleagent.planning.stochastic.DynamicProgramming;
 
 import burlap.behavior.singleagent.EpisodeAnalysis;
 import burlap.behavior.singleagent.options.Option;
@@ -386,6 +389,33 @@ public abstract class Policy {
 		}while(!env.isInTerminalState() && nSteps < numSteps);
 
 		return ea;
+	}
+
+	public boolean checkPolicyEqualityForDP(Policy p, DynamicProgramming dp, TerminalFunction tf){
+		List<State> states = dp.getAllStates();
+		boolean equal = true;
+		Iterator<State> it = states.iterator();
+		while(it.hasNext()){
+			State s = it.next();
+
+			//check if both policies have an action regarding this state
+			if(this.isDefinedFor(s) && p.isDefinedFor(s)){
+
+				//make sure this state is not terminal 
+				if(!tf.isTerminal(s)){
+					//check that the names of the actions equal (for now)
+					if(!(this.getAction(s).actionName().equals(p.getAction(s).actionName()))) {
+						equal = false;
+						break;
+					}
+				}
+			} else {
+				System.out.println("policy not defined for state");
+				equal = false;
+				break;
+			}
+		}
+		return equal;
 	}
 
 
