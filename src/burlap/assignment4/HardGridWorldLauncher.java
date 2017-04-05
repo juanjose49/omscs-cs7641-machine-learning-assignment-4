@@ -26,8 +26,8 @@ public class HardGridWorldLauncher {
 	//you can use to visualize the policy maps. Consider only having one variable set to true at a time
 	//since the pop-up window does not indicate what algorithm was used to generate the map.
 	private static boolean showValueIterationPolicyMap = true; 
-	private static boolean showPolicyIterationPolicyMap = false;
-	private static boolean showQLearningPolicyMap = false;
+	private static boolean showPolicyIterationPolicyMap = true;
+	private static boolean showQLearningPolicyMap = true;
 	
 	private static Integer MAX_ITERATIONS = 100;
 	private static Integer NUM_INTERVALS = 100;
@@ -97,6 +97,7 @@ public class HardGridWorldLauncher {
 		exp.addKeyAction("d", BasicGridWorld.ACTIONEAST);
 		exp.addKeyAction("a", BasicGridWorld.ACTIONWEST);
 
+		exp.setTitle("Hard Grid World");
 		exp.initGUI();
 
 	}

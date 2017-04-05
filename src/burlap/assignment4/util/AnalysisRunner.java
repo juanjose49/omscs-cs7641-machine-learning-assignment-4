@@ -73,7 +73,7 @@ public class AnalysisRunner {
 		MapPrinter.printPolicyMap(vi.getAllStates(), p, gen.getMap());
 		System.out.println("\n\n");
 		if(showPolicyMap){
-			simpleValueFunctionVis((ValueFunction)vi, p, initialState, domain, hashingFactory);
+			simpleValueFunctionVis((ValueFunction)vi, p, initialState, domain, hashingFactory, "Value Iteration");
 		}
 	}
 
@@ -113,17 +113,18 @@ public class AnalysisRunner {
 
 		//visualize the value function and policy.
 		if(showPolicyMap){
-			simpleValueFunctionVis(pi, p, initialState, domain, hashingFactory);
+			simpleValueFunctionVis(pi, p, initialState, domain, hashingFactory, "Policy Iteration");
 		}
 	}
 
 	public void simpleValueFunctionVis(ValueFunction valueFunction, Policy p, 
-			State initialState, Domain domain, HashableStateFactory hashingFactory){
+			State initialState, Domain domain, HashableStateFactory hashingFactory, String title){
 
 		List<State> allStates = StateReachability.getReachableStates(initialState,
 				(SADomain)domain, hashingFactory);
 		ValueFunctionVisualizerGUI gui = GridWorldDomain.getGridWorldValueFunctionVisualization(
 				allStates, valueFunction, p);
+		gui.setTitle(title);
 		gui.initGUI();
 
 	}
@@ -163,7 +164,7 @@ public class AnalysisRunner {
 
 		//visualize the value function and policy.
 		if(showPolicyMap){
-			simpleValueFunctionVis((ValueFunction)agent, p, initialState, domain, hashingFactory);
+			simpleValueFunctionVis((ValueFunction)agent, p, initialState, domain, hashingFactory, "Q-Learning");
 		}
 
 	}
