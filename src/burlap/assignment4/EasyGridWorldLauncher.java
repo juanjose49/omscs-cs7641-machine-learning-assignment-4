@@ -46,15 +46,19 @@ public class EasyGridWorldLauncher {
 		int[][] map = MapPrinter.mapToMatrix(userMap);
 		int maxX = map.length-1;
 		int maxY = map[0].length-1;
-		// 
+		//
+
+		// override these to change where the goal is
+		int goalX = maxX;
+		int goalY = maxY;
 
 		BasicGridWorld gen = new BasicGridWorld(map,maxX,maxY); //0 index map is 11X11
 		Domain domain = gen.generateDomain();
 
-		State initialState = BasicGridWorld.getExampleState(domain);
+		State initialState = BasicGridWorld.getExampleState(domain, goalX, goalY);
 
-		RewardFunction rf = new BasicRewardFunction(maxX,maxY); //Goal is at the top right grid
-		TerminalFunction tf = new BasicTerminalFunction(maxX,maxY); //Goal is at the top right grid
+		RewardFunction rf = new BasicRewardFunction(goalX,goalY); //Goal is at the top right grid
+		TerminalFunction tf = new BasicTerminalFunction(goalX,goalY); //Goal is at the top right grid
 
 		SimulatedEnvironment env = new SimulatedEnvironment(domain, rf, tf,
 				initialState);
