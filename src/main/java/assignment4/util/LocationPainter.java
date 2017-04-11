@@ -1,27 +1,27 @@
-package burlap.assignment4.util;
+package assignment4.util;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
 
-import burlap.assignment4.BasicGridWorld;
+import assignment4.BasicGridWorld;
 import burlap.oomdp.core.objects.ObjectInstance;
 import burlap.oomdp.core.states.State;
 import burlap.oomdp.visualizer.ObjectPainter;
 
-public class AgentPainter implements ObjectPainter{
-	
-	protected int[][] map;
-	
-	public AgentPainter(int[][] map){
+
+public class LocationPainter implements ObjectPainter {
+	int[][] map;
+
+	public LocationPainter(int[][] map){
 		this.map = map;
 	}
 	@Override
 	public void paintObject(Graphics2D g2, State s, ObjectInstance ob,
 							float cWidth, float cHeight) {
-		
-		//agent will be filled in gray
-		g2.setColor(Color.GRAY);
+
+		//agent will be filled in blue
+		g2.setColor(Color.BLUE);
 
 		//set up floats for the width and height of our domain
 		float fWidth = this.map.length;
@@ -44,10 +44,11 @@ public class AgentPainter implements ObjectPainter{
 		float ry = cHeight - height - ay*height;
 
 		//paint the rectangle
-		g2.fill(new Ellipse2D.Float(rx, ry, width, height));
+		g2.fill(new Rectangle2D.Float(rx, ry, width, height));
 
 
 	}
-	}
+	
 
 
+}

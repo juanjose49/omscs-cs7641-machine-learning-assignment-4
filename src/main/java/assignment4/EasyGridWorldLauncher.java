@@ -1,10 +1,10 @@
-package burlap.assignment4;
+package assignment4;
 
-import burlap.assignment4.util.AnalysisAggregator;
-import burlap.assignment4.util.AnalysisRunner;
-import burlap.assignment4.util.BasicRewardFunction;
-import burlap.assignment4.util.BasicTerminalFunction;
-import burlap.assignment4.util.MapPrinter;
+import assignment4.util.AnalysisAggregator;
+import assignment4.util.AnalysisRunner;
+import assignment4.util.BasicRewardFunction;
+import assignment4.util.BasicTerminalFunction;
+import assignment4.util.MapPrinter;
 import burlap.oomdp.core.Domain;
 import burlap.oomdp.core.TerminalFunction;
 import burlap.oomdp.core.states.State;

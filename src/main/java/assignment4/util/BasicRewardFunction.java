@@ -1,6 +1,6 @@
-package burlap.assignment4.util;
+package assignment4.util;
 
-import burlap.assignment4.BasicGridWorld;
+import assignment4.BasicGridWorld;
 import burlap.oomdp.core.objects.ObjectInstance;
 import burlap.oomdp.core.states.State;
 import burlap.oomdp.singleagent.GroundedAction;

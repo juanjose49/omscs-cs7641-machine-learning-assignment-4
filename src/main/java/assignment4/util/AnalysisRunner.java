@@ -1,6 +1,6 @@
-package burlap.assignment4.util;
+package assignment4.util;
 
-import burlap.assignment4.BasicGridWorld;
+import assignment4.BasicGridWorld;
 import burlap.behavior.policy.Policy;
 import burlap.behavior.singleagent.EpisodeAnalysis;
 import burlap.behavior.singleagent.auxiliary.StateReachability;

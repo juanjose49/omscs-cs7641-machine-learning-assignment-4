@@ -1,10 +1,10 @@
-package burlap.assignment4;
+package assignment4;
 
-import burlap.assignment4.util.AgentPainter;
-import burlap.assignment4.util.AtLocation;
-import burlap.assignment4.util.LocationPainter;
-import burlap.assignment4.util.Movement;
-import burlap.assignment4.util.WallPainter;
+import assignment4.util.AgentPainter;
+import assignment4.util.AtLocation;
+import assignment4.util.LocationPainter;
+import assignment4.util.Movement;
+import assignment4.util.WallPainter;
 import burlap.oomdp.auxiliary.DomainGenerator;
 import burlap.oomdp.core.Attribute;
 import burlap.oomdp.core.Domain;

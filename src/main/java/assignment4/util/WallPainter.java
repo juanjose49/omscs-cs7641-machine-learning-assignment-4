@@ -1,4 +1,4 @@
-package burlap.assignment4.util;
+package assignment4.util;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
