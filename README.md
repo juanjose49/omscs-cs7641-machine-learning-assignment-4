@@ -2,17 +2,25 @@
 ## by Juan J. San Emeterio https://www.linkedin.com/in/juanjsanemeterio/
 
 
-Greetings! The purpose of this readme file is to offer the reader the steps required to make use of this BURLAP machine learning package with several of my own custom classes (included) and Eclipse (not included). This readme is split by the different Markov Decision Processes that were required for completion of the assignment. The instructions below will assume that you have already successfully downloaded and opened Eclipse.
+Greetings! The purpose of this readme file is to offer the reader the steps required to make use of this CS 7641 Assignment 4 package. This readme is split by the different Markov Decision Processes that were required for completion of the assignment.
+
+## Project Setup
+1. Clone or download the assignment 4 repository.
+2. Download and install Eclipse IDE.
+3. Import the project inside of Eclipse.
+4. When the project is imported, right click on the top-level directory shown on the left.
+5. Navigate through context menu to Maven, then click Update Project. This should resolve classpath issues.
+Note: if you're having issues related to the classpath, or import/dependency issues try to repeat steps 4 and 5. 
 
 ## Running the Grid World: Low Difficulty Analysis:
 
-1. While inside the directory structure burlap-assignment-4/src/burlap/assignment4/ right-click on the EasyGridWorldLauncher.
+1. While inside the directory structure cs7641-assignment-4/src/main/java/assignment4/ right-click on the EasyGridWorldLauncher.
 2. Go to the “Run As…” section and select “Java Application.
 3. All three algorithms will run and the aggregate analysis and optimal policies will be printed to the console.
 
 ## Running the Grid World: High Difficulty Analysis:
 
-1. While inside the directory structure burlap-assignment-4/src/burlap/assignment4/ right-click on the HardGridWorldLauncher.
+1. While inside the directory structure cs7641-assignment-4/src/burlap/assignment4/ right-click on the HardGridWorldLauncher.
 2. Go to the “Run As…”n section and select “Java Application.
 3. All three algorithms will run and the aggregate analysis and optimal policies will be printed to the console.
 
