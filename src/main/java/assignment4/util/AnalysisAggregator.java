@@ -1,9 +1,6 @@
 package assignment4.util;
 
-import burlap.oomdp.core.values.DoubleArrayValue;
-
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public final class AnalysisAggregator {
 	private static List<Integer> numIterations = new ArrayList<Integer>();
@@ -140,5 +137,48 @@ public final class AnalysisAggregator {
 		printValueIterationRewards();
 		printPolicyIterationRewards();
 		printQLearningRewards();
+	}
+
+	public static void plotGraphs(){
+		plotResults(numIterations, intToDouble(stepsToFinishValueIteration), intToDouble(stepsToFinishPolicyIteration), intToDouble(stepsToFinishQLearning), "Results", "iterations", "steps");
+		plotResults(numIterations, intToDouble(millisecondsToFinishValueIteration), intToDouble(millisecondsToFinishPolicyIteration), intToDouble(millisecondsToFinishQLearning), "Time", "iterations", "time (ms)");
+		plotResults(numIterations, rewardsForValueIteration, rewardsForPolicyIteration, rewardsForQLearning, "Rewards", "iterations", "rewards");
+	}
+
+	private static List<Double> intToDouble(List<Integer> input) {
+		List<Double> output = new ArrayList<>();
+		for (Integer inputValue : input) {
+			output.add(new Double(inputValue));
+		}
+		return output;
+	}
+
+	private static void plotResults(List<Integer> numIterations, List<Double> valueIteration, List<Double> policyIteration, List<Double> qLearning, String plotType, String xAxis, String yAxis) {
+		Map<String, Map<Double, Double>> resultCollection = new HashMap<>();
+		double lowestY = 0;
+		double highestY = 0;
+		Map<Double, Double> valueIterationResults = new LinkedHashMap<>();
+		for (int i = 0; i < valueIteration.size(); i++) {
+			valueIterationResults.put(new Double(numIterations.get(i)), valueIteration.get(i));
+			lowestY = lowestY > valueIteration.get(i) ? valueIteration.get(i) : lowestY;
+			highestY = highestY < valueIteration.get(i) ? valueIteration.get(i) : highestY;
+		}
+		resultCollection.put("Value Iteration " + plotType, valueIterationResults);
+		Map<Double, Double> policyIterationResults = new LinkedHashMap<>();
+		for (int i = 0; i < policyIteration.size(); i++) {
+			policyIterationResults.put(new Double(numIterations.get(i)), policyIteration.get(i));
+			lowestY = lowestY > policyIteration.get(i) ? policyIteration.get(i) : lowestY;
+			highestY = highestY < policyIteration.get(i) ? policyIteration.get(i) : highestY;
+		}
+		resultCollection.put("Policy Iteration " + plotType, policyIterationResults);
+		Map<Double, Double> qLearningResults = new LinkedHashMap<>();
+		for (int i = 0; i < qLearning.size(); i++) {
+			qLearningResults.put(new Double(numIterations.get(i)), qLearning.get(i));
+			lowestY = lowestY > qLearning.get(i) ? qLearning.get(i) : lowestY;
+			highestY = highestY < qLearning.get(i) ? qLearning.get(i) : highestY;
+		}
+		resultCollection.put("Q-Learning " + plotType, qLearningResults);
+
+		GraphUtils.plotGraph(resultCollection, xAxis, yAxis, 0, numIterations.get(numIterations.size() - 1), lowestY, highestY);
 	}
 }

@@ -83,6 +83,7 @@ public class HardGridWorldLauncher {
 			runner.runQLearning(gen,domain,initialState, rf, tf, env, showQLearningPolicyMap);
 		}
 		AnalysisAggregator.printAggregateAnalysis();
+		AnalysisAggregator.plotGraphs();
 	}
 
 

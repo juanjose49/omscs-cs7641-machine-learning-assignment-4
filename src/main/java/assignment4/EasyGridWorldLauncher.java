@@ -77,6 +77,7 @@ public class EasyGridWorldLauncher {
 			runner.runQLearning(gen,domain,initialState, rf, tf, env, showQLearningPolicyMap);
 		}
 		AnalysisAggregator.printAggregateAnalysis();
+		AnalysisAggregator.plotGraphs();
 	}
 
 
