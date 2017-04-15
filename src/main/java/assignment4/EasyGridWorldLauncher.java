@@ -81,8 +81,6 @@ public class EasyGridWorldLauncher {
 		AnalysisAggregator.plotGraphs();
 	}
 
-
-
 	private static void visualizeInitialGridWorld(Domain domain,
 			BasicGridWorld gen, SimulatedEnvironment env) {
 		Visualizer v = gen.getVisualizer();
@@ -95,8 +93,5 @@ public class EasyGridWorldLauncher {
 
 		exp.setTitle("Easy Grid World");
 		exp.initGUI();
-
 	}
-	
-
 }

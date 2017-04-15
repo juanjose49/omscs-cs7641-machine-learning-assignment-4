@@ -87,8 +87,6 @@ public class HardGridWorldLauncher {
 		AnalysisAggregator.plotGraphs();
 	}
 
-
-
 	private static void visualizeInitialGridWorld(Domain domain,
 			BasicGridWorld gen, SimulatedEnvironment env) {
 		Visualizer v = gen.getVisualizer();
@@ -101,8 +99,5 @@ public class HardGridWorldLauncher {
 
 		exp.setTitle("Hard Grid World");
 		exp.initGUI();
-
 	}
-	
-
 }

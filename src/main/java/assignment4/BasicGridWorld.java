@@ -44,10 +44,8 @@ public class BasicGridWorld implements DomainGenerator {
 		
 	}
 
-
 	@Override
 	public Domain generateDomain() {
-
 		SADomain domain = new SADomain();
 
 		Attribute xatt = new Attribute(domain, ATTX,
@@ -114,7 +112,4 @@ public class BasicGridWorld implements DomainGenerator {
 	public void setMap(int[][] map) {
 		this.map = map;
 	}
-
-
-
 }
