@@ -31,5 +31,4 @@ public class BasicRewardFunction implements RewardFunction {
 
 		return -1;
 	}
-
 }

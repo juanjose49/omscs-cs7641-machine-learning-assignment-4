@@ -7,7 +7,6 @@ import java.awt.geom.Rectangle2D;
 import burlap.oomdp.core.states.State;
 import burlap.oomdp.visualizer.StaticPainter;
 
-
 public class WallPainter implements StaticPainter {
 	
 	private int[][] map;
@@ -18,7 +17,6 @@ public class WallPainter implements StaticPainter {
 	
 	@Override
 	public void paint(Graphics2D g2, State s, float cWidth, float cHeight) {
-
 		//walls will be filled in black
 		g2.setColor(Color.BLACK);
 
@@ -35,10 +33,8 @@ public class WallPainter implements StaticPainter {
 		//cavas of dimension widthxheight
 		for(int i = 0; i < this.map.length; i++){
 			for(int j = 0; j < this.map[0].length; j++){
-
 				//is there a wall here?
 				if(this.map[i][j] == 1){
-
 					//left coordinate of cell on our canvas
 					float rx = i*width;
 
@@ -49,14 +45,8 @@ public class WallPainter implements StaticPainter {
 
 					//paint the rectangle
 					g2.fill(new Rectangle2D.Float(rx, ry, width, height));
-
 				}
-
-
 			}
 		}
-
 	}
-
-
 }

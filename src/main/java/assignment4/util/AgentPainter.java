@@ -19,7 +19,6 @@ public class AgentPainter implements ObjectPainter{
 	@Override
 	public void paintObject(Graphics2D g2, State s, ObjectInstance ob,
 							float cWidth, float cHeight) {
-		
 		//agent will be filled in gray
 		g2.setColor(Color.GRAY);
 
@@ -45,9 +44,5 @@ public class AgentPainter implements ObjectPainter{
 
 		//paint the rectangle
 		g2.fill(new Ellipse2D.Float(rx, ry, width, height));
-
-
 	}
-	}
-
-
+}

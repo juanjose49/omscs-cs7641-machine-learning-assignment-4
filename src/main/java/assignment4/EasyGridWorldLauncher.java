@@ -46,6 +46,7 @@ public class EasyGridWorldLauncher {
 		int[][] map = MapPrinter.mapToMatrix(userMap);
 		int maxX = map.length-1;
 		int maxY = map[0].length-1;
+		System.out.println("rows: " + maxX+1 + " cols: " + maxY+1);
 		// 
 
 		BasicGridWorld gen = new BasicGridWorld(map,maxX,maxY); //0 index map is 11X11

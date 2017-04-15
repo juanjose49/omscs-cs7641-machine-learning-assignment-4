@@ -9,7 +9,6 @@ import burlap.oomdp.core.objects.ObjectInstance;
 import burlap.oomdp.core.states.State;
 import burlap.oomdp.visualizer.ObjectPainter;
 
-
 public class LocationPainter implements ObjectPainter {
 	int[][] map;
 
@@ -19,7 +18,6 @@ public class LocationPainter implements ObjectPainter {
 	@Override
 	public void paintObject(Graphics2D g2, State s, ObjectInstance ob,
 							float cWidth, float cHeight) {
-
 		//agent will be filled in blue
 		g2.setColor(Color.BLUE);
 
@@ -45,10 +43,5 @@ public class LocationPainter implements ObjectPainter {
 
 		//paint the rectangle
 		g2.fill(new Rectangle2D.Float(rx, ry, width, height));
-
-
 	}
-	
-
-
 }

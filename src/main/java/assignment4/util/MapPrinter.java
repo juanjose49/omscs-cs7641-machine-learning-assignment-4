@@ -26,18 +26,15 @@ public class MapPrinter {
 
 	    	 System.out.println();
 		}
-   	 System.out.println("\n\n");
-
+		System.out.println("\n\n");
 	}
 	
 	public static void printPolicyMap(List<State> states, Policy p,int[][] matrix) {
-
 		System.out.println();
 		System.out.println("This is your optimal policy:");
 		String[][] policy = new String[matrix.length][matrix[0].length];
 		System.out.println("num of rows in policy is " + policy.length);     
 
-		
 		for(State state : states){
 			ObjectInstance agent = state.getObject("agent0");
 			List<Value> values = agent.getValues();
@@ -69,7 +66,6 @@ public class MapPrinter {
 				action = "*";
 			}
 			policy[x][y] = action;
-
 		}
 		
 		String[][] printPolicy = matrixToMap(policy);
@@ -94,6 +90,7 @@ public class MapPrinter {
 //			System.out.println(state.toString()+":"+p.getAction(state).toString());
 //		}
 	}
+
 	public static String[][] mapToMatrix(String[][] map) {
 		// its rotated and inverted
 		int numMapRows = map.length;

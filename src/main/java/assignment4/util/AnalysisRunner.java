@@ -35,10 +35,9 @@ public class AnalysisRunner {
 		int increment = MAX_ITERATIONS/NUM_INTERVALS;
 		for(int numIterations = increment;numIterations<=MAX_ITERATIONS;numIterations+=increment ){
 			AnalysisAggregator.addNumberOfIterations(numIterations);
-
 		}
-
 	}
+
 	public void runValueIteration(BasicGridWorld gen, Domain domain,
 			State initialState, RewardFunction rf, TerminalFunction tf, boolean showPolicyMap) {
 		System.out.println("//Value Iteration Analysis//");
@@ -126,7 +125,6 @@ public class AnalysisRunner {
 				allStates, valueFunction, p);
 		gui.setTitle(title);
 		gui.initGUI();
-
 	}
 	
 	public void runQLearning(BasicGridWorld gen, Domain domain,
@@ -166,7 +164,6 @@ public class AnalysisRunner {
 		if(showPolicyMap){
 			simpleValueFunctionVis((ValueFunction)agent, p, initialState, domain, hashingFactory, "Q-Learning");
 		}
-
 	}
 	
 	private static List<State> getAllStates(Domain domain,
@@ -192,5 +189,4 @@ public class AnalysisRunner {
 		}
 		return myRewards;
 	}
-	
 }

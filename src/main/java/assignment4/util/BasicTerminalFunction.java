@@ -30,5 +30,4 @@ public class BasicTerminalFunction implements TerminalFunction {
 
 		return false;
 	}
-
 }

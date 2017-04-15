@@ -98,12 +98,10 @@ public class Movement extends SimpleAction implements FullActionModel {
 			}
 		}
 
-
 		return tps;
 	}
 
 	protected int [] moveResult(int curX, int curY, int direction){
-
 		//first get change in x and y from direction using 0: north; 1: south; 2:east; 3: west
 		int xdelta = 0;
 		int ydelta = 0;
@@ -133,11 +131,6 @@ public class Movement extends SimpleAction implements FullActionModel {
 			ny = curY;
 		}
 
-
 		return new int[]{nx,ny};
-
 	}
-
-
 }
-

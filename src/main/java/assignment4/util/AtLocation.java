@@ -25,5 +25,4 @@ public class AtLocation extends PropositionalFunction {
 
 		return ax == lx && ay == ly;
 	}
-
 }
