@@ -4,113 +4,113 @@ import java.util.*;
 
 public final class AnalysisAggregator {
 	private static List<Integer> numIterations = new ArrayList<Integer>();
-	private static List<Integer> stepsToFinishValueIteration = new ArrayList<Integer>();
-	private static List<Integer> stepsToFinishPolicyIteration = new ArrayList<Integer>();
-	private static List<Integer> stepsToFinishQLearning = new ArrayList<Integer>();
+	private static Map<String, Map<Double, Double>> stepsToFinishValueIteration = new LinkedHashMap<>();
+	private static Map<String, Map<Double, Double>> stepsToFinishPolicyIteration = new LinkedHashMap<>();
+	private static Map<String, Map<Double, Double>> stepsToFinishQLearning = new LinkedHashMap<>();
 	
-	private static List<Integer> millisecondsToFinishValueIteration = new ArrayList<Integer>();
-	private static List<Integer> millisecondsToFinishPolicyIteration = new ArrayList<Integer>();
-	private static List<Integer> millisecondsToFinishQLearning = new ArrayList<Integer>();
+	private static Map<String, Map<Double, Double>> millisecondsToFinishValueIteration = new LinkedHashMap<>();
+	private static Map<String, Map<Double, Double>> millisecondsToFinishPolicyIteration = new LinkedHashMap<>();
+	private static Map<String, Map<Double, Double>> millisecondsToFinishQLearning = new LinkedHashMap<>();
 
-	private static List<Double> rewardsForValueIteration = new ArrayList<Double>();
-	private static List<Double> rewardsForPolicyIteration = new ArrayList<Double>();
-	private static List<Double> rewardsForQLearning = new ArrayList<Double>();
+	private static Map<String, Map<Double, Double>> rewardsForValueIteration = new LinkedHashMap<>();
+	private static Map<String, Map<Double, Double>> rewardsForPolicyIteration = new LinkedHashMap<>();
+	private static Map<String, Map<Double, Double>> rewardsForQLearning = new LinkedHashMap<>();
 	
 	public static void addNumberOfIterations(Integer numIterations1){
 		numIterations.add(numIterations1);
 	}
 
-	public static void addStepsToFinishValueIteration(Integer stepsToFinishValueIteration1){
-		stepsToFinishValueIteration.add(stepsToFinishValueIteration1);
+	public static void addStepsToFinishValueIteration(String key, Double iteration, Double steps) {
+		addToMap(stepsToFinishValueIteration, key, iteration, steps);
 	}
 
-	public static void addStepsToFinishPolicyIteration(Integer stepsToFinishPolicyIteration1){
-		stepsToFinishPolicyIteration.add(stepsToFinishPolicyIteration1);
+	public static void addStepsToFinishPolicyIteration(String key, Double iteration, Double steps) {
+		addToMap(stepsToFinishPolicyIteration, key, iteration, steps);
 	}
 
-	public static void addStepsToFinishQLearning(Integer stepsToFinishQLearning1){
-		stepsToFinishQLearning.add(stepsToFinishQLearning1);
+	public static void addStepsToFinishQLearning(String key, Double iteration, Double steps) {
+		addToMap(stepsToFinishQLearning, key, iteration, steps);
 	}
 
-	public static void printValueIterationResults(){
-		System.out.print("Value Iteration,");	
-		printList(stepsToFinishValueIteration);
+	public static void addMillisecondsToFinishValueIteration(String key, Double iteration, Double milliseconds) {
+		addToMap(millisecondsToFinishValueIteration, key, iteration, milliseconds);
 	}
 
-	public static void printPolicyIterationResults(){
-		System.out.print("Policy Iteration,");	
-		printList(stepsToFinishPolicyIteration);
+	public static void addMillisecondsToFinishPolicyIteration(String key, Double iteration, Double milliseconds) {
+		addToMap(millisecondsToFinishPolicyIteration, key, iteration, milliseconds);
 	}
 
-	public static void printQLearningResults(){
-		System.out.print("Q Learning,");	
-		printList(stepsToFinishQLearning);
-	}
-	
-	public static void addMillisecondsToFinishValueIteration(Integer millisecondsToFinishValueIteration1){
-		millisecondsToFinishValueIteration.add(millisecondsToFinishValueIteration1);
+	public static void addMillisecondsToFinishQLearning(String key, Double iteration, Double milliseconds) {
+		addToMap(millisecondsToFinishQLearning, key, iteration, milliseconds);
 	}
 
-	public static void addMillisecondsToFinishPolicyIteration(Integer millisecondsToFinishPolicyIteration1){
-		millisecondsToFinishPolicyIteration.add(millisecondsToFinishPolicyIteration1);
+	public static void addValueIterationReward(String key, Double iteration, Double reward) {
+		addToMap(rewardsForValueIteration, key, iteration, reward);
 	}
 
-	public static void addMillisecondsToFinishQLearning(Integer millisecondsToFinishQLearning1){
-		millisecondsToFinishQLearning.add(millisecondsToFinishQLearning1);
+	public static void addPolicyIterationReward(String key, Double iteration, Double reward) {
+		addToMap(rewardsForPolicyIteration, key, iteration, reward);
 	}
 
-	public static void addValueIterationReward(double reward) {
-		rewardsForValueIteration.add(reward);
+	public static void addQLearningReward(String key, Double iteration, Double reward) {
+		addToMap(rewardsForQLearning, key, iteration, reward);
 	}
 
-	public static void addPolicyIterationReward(double reward) {
-		rewardsForPolicyIteration.add(reward);
-	}
-
-	public static void addQLearningReward(double reward) {
-		rewardsForQLearning.add(reward);
-	}
-
-	public static void printValueIterationTimeResults(){
-		System.out.print("Value Iteration,");	
-		printList(millisecondsToFinishValueIteration);
-	}
-
-	public static void printPolicyIterationTimeResults(){
-		System.out.print("Policy Iteration,");
-		printList(millisecondsToFinishPolicyIteration);
-	}
-
-	public static void printQLearningTimeResults(){
-		System.out.print("Q Learning,");	
-		printList(millisecondsToFinishQLearning);
-	}
-
-	public static void printValueIterationRewards(){
-		System.out.print("Value Iteration Rewards,");
-		printDoubleList(rewardsForValueIteration);
-	}
-
-	public static void printPolicyIterationRewards(){
-		System.out.print("Policy Iteration Rewards,");
-		printDoubleList(rewardsForPolicyIteration);
-	}
-
-	public static void printQLearningRewards(){
-		System.out.print("Q Learning Rewards,");
-		printDoubleList(rewardsForQLearning);
-	}
-
-	public static void printNumIterations(){
-		System.out.print("Iterations,");	
+	public static void printNumIterations() {
+		System.out.print("Iterations,");
 		printList(numIterations);
 	}
 
-	private static void printList(List<Integer> valueList){
+	public static void printValueIterationResults() {
+		System.out.print("Value Iteration,");
+		printResultsMap(stepsToFinishValueIteration);
+	}
+
+	public static void printPolicyIterationResults() {
+		System.out.print("Policy Iteration,");
+		printResultsMap(stepsToFinishPolicyIteration);
+	}
+
+	public static void printQLearningResults() {
+		System.out.print("Q Learning,");
+		printResultsMap(stepsToFinishQLearning);
+	}
+
+	public static void printValueIterationTimeResults() {
+		System.out.print("Value Iteration,");	
+		printResultsMap(millisecondsToFinishValueIteration);
+	}
+
+	public static void printPolicyIterationTimeResults() {
+		System.out.print("Policy Iteration,");
+		printResultsMap(millisecondsToFinishPolicyIteration);
+	}
+
+	public static void printQLearningTimeResults() {
+		System.out.print("Q Learning,");	
+		printResultsMap(millisecondsToFinishQLearning);
+	}
+
+	public static void printValueIterationRewards() {
+		System.out.print("Value Iteration Rewards,");
+		printResultsMap(rewardsForValueIteration);
+	}
+
+	public static void printPolicyIterationRewards() {
+		System.out.print("Policy Iteration Rewards,");
+		printResultsMap(rewardsForPolicyIteration);
+	}
+
+	public static void printQLearningRewards() {
+		System.out.print("Q Learning Rewards,");
+		printResultsMap(rewardsForQLearning);
+	}
+
+	private static void printList(List<Integer> valueList) {
 		int counter = 0;
-		for(int value : valueList){
+		for (int value : valueList) {
 			System.out.print(String.valueOf(value));
-			if(counter != valueList.size()-1){
+			if (counter != valueList.size()-1) {
 				System.out.print(",");
 			}
 			counter++;
@@ -118,16 +118,27 @@ public final class AnalysisAggregator {
 		System.out.println();
 	}
 
-	private static void printDoubleList(List<Double> valueList){
-		int counter = 0;
-		for(double value : valueList){
-			System.out.print(String.valueOf(value));
-			if(counter != valueList.size()-1){
-				System.out.print(",");
+	private static void printResultsMap(Map<String, Map<Double, Double>> resultsMap){
+		for(String resultKey : resultsMap.keySet()){
+			System.out.println(resultKey + ":");
+			Map<Double, Double> valuesMap = resultsMap.get(resultKey);
+			int counter = 0;
+			for (Double valueKey : valuesMap.keySet()) {
+				System.out.print(valuesMap.get(valueKey));
+				if(counter != valuesMap.size()-1){
+					System.out.print(",");
+				}
+				counter++;
 			}
-			counter++;
 		}
 		System.out.println();
+	}
+
+	private static void addToMap(Map<String, Map<Double, Double>> map, String key, Double iteration, Double value) {
+		if (!map.containsKey(key)) {
+			map.put(key, new LinkedHashMap<>());
+		}
+		map.get(key).put(iteration, value);
 	}
 
 	public static void printAggregateAnalysis(){
@@ -155,45 +166,82 @@ public final class AnalysisAggregator {
 	}
 
 	public static void plotGraphs(){
-		plotResults(numIterations, intToDouble(stepsToFinishValueIteration), intToDouble(stepsToFinishPolicyIteration), intToDouble(stepsToFinishQLearning), "Results", "iterations", "steps");
-		plotResults(numIterations, intToDouble(millisecondsToFinishValueIteration), intToDouble(millisecondsToFinishPolicyIteration), intToDouble(millisecondsToFinishQLearning), "Time", "iterations", "time (ms)");
+		plotResults(numIterations, stepsToFinishValueIteration, stepsToFinishPolicyIteration, stepsToFinishQLearning, "Results", "iterations", "steps");
+		plotResults(numIterations, millisecondsToFinishValueIteration, millisecondsToFinishPolicyIteration, millisecondsToFinishQLearning, "Time", "iterations", "time (ms)");
 		plotResults(numIterations, rewardsForValueIteration, rewardsForPolicyIteration, rewardsForQLearning, "Rewards", "iterations", "rewards");
 	}
 
-	private static List<Double> intToDouble(List<Integer> input) {
-		List<Double> output = new ArrayList<>();
-		for (Integer inputValue : input) {
-			output.add(new Double(inputValue));
-		}
-		return output;
+	private static void plotResults(List<Integer> numIterations, Map<String, Map<Double, Double>> valueIteration,
+									Map<String, Map<Double, Double>> policyIteration, Map<String, Map<Double, Double>> qLearning,
+									String plotType, String xAxis, String yAxis) {
+		Map<String, Map<Double, Double>> resultCollection = new HashMap<>();
+		MutableDouble lowestY = new MutableDouble(0);
+		MutableDouble highestY = new MutableDouble(0);
+
+		addToResultCollection(valueIteration, resultCollection, lowestY, highestY, plotType);
+		addToResultCollection(policyIteration, resultCollection, lowestY, highestY, plotType);
+		addToResultCollection(qLearning, resultCollection, lowestY, highestY, plotType);
+
+		GraphUtils.plotGraph(resultCollection, xAxis, yAxis, 0, numIterations.get(numIterations.size() - 1), lowestY.getValue(), highestY.getValue());
 	}
 
-	private static void plotResults(List<Integer> numIterations, List<Double> valueIteration, List<Double> policyIteration, List<Double> qLearning, String plotType, String xAxis, String yAxis) {
-		Map<String, Map<Double, Double>> resultCollection = new HashMap<>();
-		double lowestY = 0;
-		double highestY = 0;
-		Map<Double, Double> valueIterationResults = new LinkedHashMap<>();
-		for (int i = 0; i < valueIteration.size(); i++) {
-			valueIterationResults.put(new Double(numIterations.get(i)), valueIteration.get(i));
-			lowestY = lowestY > valueIteration.get(i) ? valueIteration.get(i) : lowestY;
-			highestY = highestY < valueIteration.get(i) ? valueIteration.get(i) : highestY;
-		}
-		resultCollection.put("Value Iteration " + plotType, valueIterationResults);
-		Map<Double, Double> policyIterationResults = new LinkedHashMap<>();
-		for (int i = 0; i < policyIteration.size(); i++) {
-			policyIterationResults.put(new Double(numIterations.get(i)), policyIteration.get(i));
-			lowestY = lowestY > policyIteration.get(i) ? policyIteration.get(i) : lowestY;
-			highestY = highestY < policyIteration.get(i) ? policyIteration.get(i) : highestY;
-		}
-		resultCollection.put("Policy Iteration " + plotType, policyIterationResults);
-		Map<Double, Double> qLearningResults = new LinkedHashMap<>();
-		for (int i = 0; i < qLearning.size(); i++) {
-			qLearningResults.put(new Double(numIterations.get(i)), qLearning.get(i));
-			lowestY = lowestY > qLearning.get(i) ? qLearning.get(i) : lowestY;
-			highestY = highestY < qLearning.get(i) ? qLearning.get(i) : highestY;
-		}
-		resultCollection.put("Q-Learning " + plotType, qLearningResults);
+	private static void addToResultCollection(Map<String, Map<Double, Double>> valueIteration, Map<String, Map<Double, Double>> resultCollection,
+											  MutableDouble lowestY, MutableDouble highestY, String plotType) {
+		for (String valueIterationKey : valueIteration.keySet()) {
+			Map<Double, Double> valueIterationValueMap = valueIteration.get(valueIterationKey);
+			Map<Double, Double> valueIterationResults = new LinkedHashMap<>();
+			for (Double valueIterationValueKey : valueIterationValueMap.keySet()) {
+				Double valueIterationValueResult = valueIterationValueMap.get(valueIterationValueKey);
+				valueIterationResults.put(valueIterationValueKey, valueIterationValueResult);
 
-		GraphUtils.plotGraph(resultCollection, xAxis, yAxis, 0, numIterations.get(numIterations.size() - 1), lowestY, highestY);
+				if (lowestY.isGreaterThan(valueIterationValueResult)) {
+					lowestY.setValue(valueIterationValueResult);
+				}
+				if (highestY.isLessThan(valueIterationValueResult)) {
+					highestY.setValue(valueIterationValueResult);
+				}
+			}
+			resultCollection.put(valueIterationKey + " " + plotType, valueIterationResults);
+		}
+	}
+
+	static class MutableDouble {
+		private double value;
+
+		public MutableDouble(double value) {
+			this.value = value;
+		}
+
+		public double getValue() {
+			return this.value;
+		}
+
+		public void setValue(double value) {
+			this.value = value;
+		}
+
+		public boolean isLessThan (double value) {
+			return this.value < value;
+		}
+
+		public boolean isGreaterThan (double value) {
+			return this.value > value;
+		}
+
+		@Override
+		public boolean equals(Object o) {
+			if (this == o) return true;
+			if (o == null || getClass() != o.getClass()) return false;
+
+			MutableDouble that = (MutableDouble) o;
+
+			return Double.compare(that.value, value) == 0;
+		}
+
+		@Override
+		public int hashCode() {
+			long temp = Double.doubleToLongBits(value);
+			return (int) (temp ^ (temp >>> 32));
+		}
 	}
 }

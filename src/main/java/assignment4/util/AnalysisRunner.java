@@ -58,12 +58,12 @@ public class AnalysisRunner {
 	
 			// run planning from our initial state
 			p = vi.planFromState(initialState);
-			AnalysisAggregator.addMillisecondsToFinishValueIteration((int) (System.nanoTime()-startTime)/1000000);
+			AnalysisAggregator.addMillisecondsToFinishValueIteration("VI 0.99", (double) numIterations, (double) (System.nanoTime()-startTime)/1000000);
 
 			// evaluate the policy with one roll out visualize the trajectory
 			ea = p.evaluateBehavior(initialState, rf, tf);
-			AnalysisAggregator.addValueIterationReward(calcRewardInEpisode(ea));
-			AnalysisAggregator.addStepsToFinishValueIteration(ea.numTimeSteps());
+			AnalysisAggregator.addValueIterationReward("VI 0.99", (double) numIterations, calcRewardInEpisode(ea));
+			AnalysisAggregator.addStepsToFinishValueIteration("VI 0.99", (double) numIterations, (double) ea.numTimeSteps());
 		}
 		
 //		Visualizer v = gen.getVisualizer();
@@ -95,12 +95,12 @@ public class AnalysisRunner {
 	
 			// run planning from our initial state
 			p = pi.planFromState(initialState);
-			AnalysisAggregator.addMillisecondsToFinishPolicyIteration((int) (System.nanoTime()-startTime)/1000000);
+			AnalysisAggregator.addMillisecondsToFinishPolicyIteration("PI 0.99", (double) numIterations, (double) (System.nanoTime()-startTime)/1000000);
 
 			// evaluate the policy with one roll out visualize the trajectory
 			ea = p.evaluateBehavior(initialState, rf, tf);
-			AnalysisAggregator.addPolicyIterationReward(calcRewardInEpisode(ea));
-			AnalysisAggregator.addStepsToFinishPolicyIteration(ea.numTimeSteps());
+			AnalysisAggregator.addPolicyIterationReward("PI 0.99", (double) numIterations, calcRewardInEpisode(ea));
+			AnalysisAggregator.addStepsToFinishPolicyIteration("PI 0.99", (double) numIterations, (double) ea.numTimeSteps());
 		}
 
 //		Visualizer v = gen.getVisualizer();
@@ -151,9 +151,9 @@ public class AnalysisRunner {
 			}
 			agent.initializeForPlanning(rf, tf, 1);
 			p = agent.planFromState(initialState);
-			AnalysisAggregator.addQLearningReward(calcRewardInEpisode(ea));
-			AnalysisAggregator.addMillisecondsToFinishQLearning((int) (System.nanoTime()-startTime)/1000000);
-			AnalysisAggregator.addStepsToFinishQLearning(ea.numTimeSteps());
+			AnalysisAggregator.addQLearningReward("QL 0.99", (double) numIterations, calcRewardInEpisode(ea));
+			AnalysisAggregator.addMillisecondsToFinishQLearning("QL 0.99", (double) numIterations, (double) (System.nanoTime()-startTime)/1000000);
+			AnalysisAggregator.addStepsToFinishQLearning("QL 0.99", (double) numIterations, (double) ea.numTimeSteps());
 
 		}
 		AnalysisAggregator.printQLearningResults();
