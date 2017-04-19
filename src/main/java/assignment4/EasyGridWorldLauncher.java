@@ -32,12 +32,18 @@ public class EasyGridWorldLauncher {
 	private static Integer MAX_ITERATIONS = 100;
 	private static Integer NUM_INTERVALS = 100;
 
-	protected static int[][] userMap = new int[][] { 
-			{ 0, 0, 0, 0, 0},
-			{ 0, 1, 1, 1, 0},
-			{ 0, 1, 1, 1, 0},
-			{ 1, 0, 1, 1, 0},
-			{ 0, 0, 0, 0, 0}, };
+	protected static int[][] userMap = new int[][] {
+			{0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+			{1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1},
+			{0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0}};
 	
 //	private static Integer mapLen = map.length-1;
 
