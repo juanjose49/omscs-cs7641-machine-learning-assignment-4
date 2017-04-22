@@ -151,10 +151,10 @@ public class AnalysisRunner {
 
 			agent = new QLearning(domain, gamma, hashingFactory, 0.99, learningRate, MAX_STEPS);
 			
-			//for (int i = 0; i < numIterations; i++) {
+			for (int i = 0; i < numIterations; i++) {
 				ea = agent.runLearningEpisode(env);
 				env.resetEnvironment();
-			//}
+			}
 			agent.initializeForPlanning(rf, tf, 1);
 			p = agent.planFromState(initialState);
 			AnalysisAggregator.addQLearningReward("QL " + gamma + " " + learningRate, (double) numIterations, calcRewardInEpisode(ea));
