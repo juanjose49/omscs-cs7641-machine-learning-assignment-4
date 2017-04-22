@@ -31,6 +31,7 @@ public class EasyGridWorldLauncher {
 	
 	private static Integer MAX_ITERATIONS = 100;
 	private static Integer NUM_INTERVALS = 100;
+	private static Integer MAX_STEPS = Integer.MAX_VALUE;
 
 	protected static int[][] userMap = new int[][] {
 			{0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
@@ -73,7 +74,7 @@ public class EasyGridWorldLauncher {
 			visualizeInitialGridWorld(domain, gen, env);
 		}
 		
-		AnalysisRunner runner = new AnalysisRunner(MAX_ITERATIONS,NUM_INTERVALS);
+		AnalysisRunner runner = new AnalysisRunner(MAX_ITERATIONS, NUM_INTERVALS, MAX_STEPS);
 		if(runValueIteration){
 			runner.runValueIteration(gen,domain,initialState, rf, tf, showValueIterationPolicyMap);
 		}

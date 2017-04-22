@@ -27,10 +27,12 @@ public class AnalysisRunner {
 
 	private int MAX_ITERATIONS;
 	private int NUM_INTERVALS;
+	private int MAX_STEPS;
 
-	public AnalysisRunner(int MAX_ITERATIONS, int NUM_INTERVALS){
+	public AnalysisRunner(int MAX_ITERATIONS, int NUM_INTERVALS, int MAX_STEPS){
 		this.MAX_ITERATIONS = MAX_ITERATIONS;
 		this.NUM_INTERVALS = NUM_INTERVALS;
+		this.MAX_STEPS = MAX_STEPS;
 		
 		int increment = MAX_ITERATIONS/NUM_INTERVALS;
 		for(int numIterations = increment;numIterations<=MAX_ITERATIONS;numIterations+=increment ){
@@ -52,16 +54,16 @@ public class AnalysisRunner {
 		EpisodeAnalysis ea = null;
 		int increment = MAX_ITERATIONS/NUM_INTERVALS;
 		for(int numIterations = increment;numIterations<=MAX_ITERATIONS;numIterations+=increment ){
-			long startTime = System.nanoTime();
+			long startTime = System.currentTimeMillis();
 			//Added a very high delta number in order to guarantee that value iteration occurs the max number of iterations for comparison with the other algorithms.
 			vi = new ValueIteration(domain, rf, tf, gamma, hashingFactory, -1, numIterations);
 
 			// run planning from our initial state
 			p = vi.planFromState(initialState);
-			AnalysisAggregator.addMillisecondsToFinishValueIteration("VI " + gamma, (double) numIterations, (double) (System.nanoTime()-startTime)/1000000);
+			AnalysisAggregator.addMillisecondsToFinishValueIteration("VI " + gamma, (double) numIterations, (double) (System.currentTimeMillis()-startTime));
 
 			// evaluate the policy with one roll out visualize the trajectory
-			ea = p.evaluateBehavior(initialState, rf, tf);
+			ea = p.evaluateBehavior(initialState, rf, tf, MAX_STEPS);
 			AnalysisAggregator.addValueIterationReward("VI " + gamma, (double) numIterations, calcRewardInEpisode(ea));
 			AnalysisAggregator.addStepsToFinishValueIteration("VI " + gamma, (double) numIterations, (double) ea.numTimeSteps());
 		}
@@ -90,15 +92,15 @@ public class AnalysisRunner {
 		EpisodeAnalysis ea = null;
 		int increment = MAX_ITERATIONS/NUM_INTERVALS;
 		for(int numIterations = increment;numIterations<=MAX_ITERATIONS;numIterations+=increment ){
-			long startTime = System.nanoTime();
+			long startTime = System.currentTimeMillis();
 			pi = new PolicyIteration(domain, rf, tf, gamma, hashingFactory, -1, 1, numIterations);
 	
 			// run planning from our initial state
 			p = pi.planFromState(initialState);
-			AnalysisAggregator.addMillisecondsToFinishPolicyIteration("PI " + gamma, (double) numIterations, (double) (System.nanoTime()-startTime)/1000000);
+			AnalysisAggregator.addMillisecondsToFinishPolicyIteration("PI " + gamma, (double) numIterations, (double) (System.currentTimeMillis()-startTime));
 
 			// evaluate the policy with one roll out visualize the trajectory
-			ea = p.evaluateBehavior(initialState, rf, tf);
+			ea = p.evaluateBehavior(initialState, rf, tf, MAX_STEPS);
 			AnalysisAggregator.addPolicyIterationReward("PI " + gamma, (double) numIterations, calcRewardInEpisode(ea));
 			AnalysisAggregator.addStepsToFinishPolicyIteration("PI " + gamma, (double) numIterations, (double) ea.numTimeSteps());
 		}
@@ -145,18 +147,18 @@ public class AnalysisRunner {
 		EpisodeAnalysis ea = null;
 		int increment = MAX_ITERATIONS/NUM_INTERVALS;
 		for(int numIterations = increment;numIterations<=MAX_ITERATIONS;numIterations+=increment ){
-			long startTime = System.nanoTime();
+			long startTime = System.currentTimeMillis();
 
-			agent = new QLearning(domain, gamma, hashingFactory, 0.99, learningRate);
+			agent = new QLearning(domain, gamma, hashingFactory, 0.99, learningRate, MAX_STEPS);
 			
-			for (int i = 0; i < numIterations; i++) {
+			//for (int i = 0; i < numIterations; i++) {
 				ea = agent.runLearningEpisode(env);
 				env.resetEnvironment();
-			}
+			//}
 			agent.initializeForPlanning(rf, tf, 1);
 			p = agent.planFromState(initialState);
 			AnalysisAggregator.addQLearningReward("QL " + gamma + " " + learningRate, (double) numIterations, calcRewardInEpisode(ea));
-			AnalysisAggregator.addMillisecondsToFinishQLearning("QL " + gamma + " " + learningRate, (double) numIterations, (double) (System.nanoTime()-startTime)/1000000);
+			AnalysisAggregator.addMillisecondsToFinishQLearning("QL " + gamma + " " + learningRate, (double) numIterations, (double) (System.currentTimeMillis()-startTime));
 			AnalysisAggregator.addStepsToFinishQLearning("QL " + gamma + " " + learningRate, (double) numIterations, (double) ea.numTimeSteps());
 		}
 		AnalysisAggregator.printQLearningResults();
