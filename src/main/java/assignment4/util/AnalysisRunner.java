@@ -1,6 +1,7 @@
 package assignment4.util;
 
 import assignment4.BasicGridWorld;
+import burlap.behavior.policy.EpsilonGreedy;
 import burlap.behavior.policy.Policy;
 import burlap.behavior.singleagent.EpisodeAnalysis;
 import burlap.behavior.singleagent.auxiliary.StateReachability;
@@ -131,16 +132,19 @@ public class AnalysisRunner {
 
 	public void runQLearning(BasicGridWorld gen, Domain domain, State initialState, RewardFunction rf, TerminalFunction tf, SimulatedEnvironment env, boolean showPolicyMap) {
 		double[] gammas = new double[] { 0.99 };
-		double[] lrs = new double[] { 0.99 };
+		double[] lrs = new double[] { 0.2 };
+		double[] epsilons = new double[] { 0.1 };
 		for (double gamma : gammas) {
 			for (double lr : lrs) {
-				runQLearning(gen, domain, initialState, rf, tf, env, gamma, lr, showPolicyMap);
+				for (double epsilon : epsilons) {
+					runQLearning(gen, domain, initialState, rf, tf, env, gamma, lr, epsilon, showPolicyMap);
+				}
 			}
 		}
 	}
 
-	private void runQLearning(BasicGridWorld gen, Domain domain, State initialState, RewardFunction rf, TerminalFunction tf, SimulatedEnvironment env, double gamma, double learningRate, boolean showPolicyMap) {
-		System.out.println("//Q Learning Analysis//");
+	private void runQLearning(BasicGridWorld gen, Domain domain, State initialState, RewardFunction rf, TerminalFunction tf, SimulatedEnvironment env, double gamma, double learningRate, double epsilon, boolean showPolicyMap) {
+		System.out.println("//Q Learning Analysis//" + " gamma: " + gamma + " LR: " + learningRate + " Epsilon: " + epsilon);
 
 		QLearning agent = null;
 		Policy p = null;
@@ -150,6 +154,7 @@ public class AnalysisRunner {
 			long startTime = System.currentTimeMillis();
 
 			agent = new QLearning(domain, gamma, hashingFactory, 0.99, learningRate, MAX_STEPS);
+			agent.setLearningPolicy(new EpsilonGreedy(agent, epsilon));
 			
 			for (int i = 0; i < numIterations; i++) {
 				ea = agent.runLearningEpisode(env);
@@ -157,10 +162,12 @@ public class AnalysisRunner {
 			}
 			agent.initializeForPlanning(rf, tf, 1);
 			p = agent.planFromState(initialState);
-			AnalysisAggregator.addQLearningReward("QL " + gamma + " " + learningRate, (double) numIterations, calcRewardInEpisode(ea));
-			AnalysisAggregator.addMillisecondsToFinishQLearning("QL " + gamma + " " + learningRate, (double) numIterations, (double) (System.currentTimeMillis()-startTime));
-			AnalysisAggregator.addStepsToFinishQLearning("QL " + gamma + " " + learningRate, (double) numIterations, (double) ea.numTimeSteps());
+			AnalysisAggregator.addQLearningReward("QL " + gamma + " " + learningRate + " " + epsilon, (double) numIterations, calcRewardInEpisode(ea));
+			AnalysisAggregator.addMillisecondsToFinishQLearning("QL " + gamma + " " + learningRate + " " + epsilon, (double) numIterations, (double) (System.currentTimeMillis()-startTime));
+			AnalysisAggregator.addStepsToFinishQLearning("QL " + gamma + " " + learningRate + " " + epsilon, (double) numIterations, (double) ea.numTimeSteps());
+			System.out.print("," + numIterations);
 		}
+		System.out.println();
 		AnalysisAggregator.printQLearningResults();
 		MapPrinter.printPolicyMap(getAllStates(domain,rf,tf,initialState), p, gen.getMap());
 		System.out.println("\n\n");

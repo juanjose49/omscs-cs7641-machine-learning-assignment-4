@@ -29,8 +29,8 @@ public class HardGridWorldLauncher {
 	private static boolean showPolicyIterationPolicyMap = true;
 	private static boolean showQLearningPolicyMap = true;
 	
-	private static Integer MAX_ITERATIONS = 100;
-	private static Integer NUM_INTERVALS = 100;
+	private static Integer MAX_ITERATIONS = 1000;
+	private static Integer NUM_INTERVALS = 1000;
 	private static Integer MAX_STEPS = 50000;
 
 	protected static int[][] userMap = new int[][] {

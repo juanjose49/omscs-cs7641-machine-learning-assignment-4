@@ -29,8 +29,8 @@ public class EasyGridWorldLauncher {
 	private static boolean showPolicyIterationPolicyMap = true;
 	private static boolean showQLearningPolicyMap = true;
 	
-	private static Integer MAX_ITERATIONS = 100;
-	private static Integer NUM_INTERVALS = 100;
+	private static Integer MAX_ITERATIONS = 500;
+	private static Integer NUM_INTERVALS = 500;
 	private static Integer MAX_STEPS = Integer.MAX_VALUE;
 
 	protected static int[][] userMap = new int[][] {
